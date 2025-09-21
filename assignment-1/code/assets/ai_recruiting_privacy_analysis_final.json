@@ -1,0 +1,18 @@
+{
+  "training_summary": {
+    "final_train_loss": 0.6221003961563111,
+    "final_val_loss": 0.6943615674972534,
+    "best_val_loss": 0.6943615674972534
+  },
+  "loss_statistics": {
+    "cal_member_mean": 0.6842861860990525,
+    "cal_nonmember_mean": 0.6866310179233551,
+    "eval_member_mean": 0.6877455547451973,
+    "eval_nonmember_mean": 0.7020921349525452
+  },
+  "attack_results": {
+    "accuracy": 0.8,
+    "auc": 0.6912499999999999,
+    "privacy_risk": "MEDIUM"
+  }
+}
