@@ -157,6 +157,10 @@ def membership_inference_attack(model, train_data, test_data, tokenizer):
 - **Evaluation Loss Gap**: 0.0145 (Non-member - Member)
 - **Loss Range Overlap**: 75.54%
 
+![image info](code/assets/loss.jpeg)
+![image info](code/assets/log_roc.jpeg)
+![image info](code/assets/auc.jpeg)
+
 ## Vulnerability Analysis
 
 ### Attack Strength vs Reconstruction Quality
@@ -253,6 +257,3 @@ The analysis reveals a **moderate privacy vulnerability** in the AI recruiting s
 - Privacy risks in AI recruiting require proactive mitigation strategies
 - Regular privacy auditing should be standard practice for production ML systems
 
-![image info](code/assets/loss.jpeg)
-![image info](code/assets/log_roc.jpeg)
-![image info](code/assets/auc.jpeg)
