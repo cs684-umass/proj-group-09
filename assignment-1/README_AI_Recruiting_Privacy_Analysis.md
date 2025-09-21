@@ -252,3 +252,7 @@ The analysis reveals a **moderate privacy vulnerability** in the AI recruiting s
 - Synthetic training data may provide some protection against content extraction
 - Privacy risks in AI recruiting require proactive mitigation strategies
 - Regular privacy auditing should be standard practice for production ML systems
+
+![image info](/code/assets/loss.jpeg)
+![image info](/code/assets/log_roc.jpeg)
+![image info](/code/assets/auc.jpeg)
