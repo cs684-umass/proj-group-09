@@ -243,7 +243,11 @@ tqdm>=4.60.0
 ### File Structure
 ```
 ├── 690f_assignment1_final.ipynb  # Main Code
-├── images                        # Results plotting and charts
+├── assets
+      ├──results.json             # Results
+      ├──log_roc.jpeg             # Log ROC Plot
+      ├──auc.jpeg                 # Confusion matrix, perf metrics
+      └──loss.jpeg                # Train and Eval Bar Plot
 └── final_dataset.json            # Generated Resumes
 ```
 
