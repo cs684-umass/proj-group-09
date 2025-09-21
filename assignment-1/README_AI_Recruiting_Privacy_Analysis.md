@@ -254,5 +254,5 @@ The analysis reveals a **moderate privacy vulnerability** in the AI recruiting s
 - Regular privacy auditing should be standard practice for production ML systems
 
 ![image info](assignment-1/code/assets/loss.jpeg)
-![image info](assignment-1//code/assets/log_roc.jpeg)
-![image info](assignment-1//code/assets/auc.jpeg)
+![image info](assignment-1/code/assets/log_roc.jpeg)
+![image info](assignment-1/code/assets/auc.jpeg)
