@@ -247,7 +247,7 @@ tqdm>=4.60.0
 ```
 ├── 690f_assignment1_final.ipynb  # Main Code
 ├── assets
-      ├──results.json             # Results
+      ├──analysis_results.json             # Results
       ├──log_roc.jpeg             # Log ROC Plot
       ├──auc.jpeg                 # Confusion matrix, perf metrics
       └──loss.jpeg                # Train and Eval Bar Plot
