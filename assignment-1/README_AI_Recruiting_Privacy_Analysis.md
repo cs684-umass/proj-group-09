@@ -8,7 +8,7 @@ A comprehensive privacy analysis of an AI-powered resume screening system, imple
 This project demonstrates the privacy vulnerabilities inherent in machine learning models used for AI recruiting. Through detailed analysis of a resume classification system, we explore how an attacker might infer training data membership and attempt to extract sensitive information from the model.
 
 ## Steps to Run
-Replace this variable **hf_token** with your hugging face token which has permission for mistralai/Mistral-7B-Instruct-v0.3 model in cell 2.
+Replace the variable **hf_token** with your hugging face token which has permission for mistralai/Mistral-7B-Instruct-v0.3 model in cell 2.
 
 ## Dataset
 
@@ -247,7 +247,7 @@ tqdm>=4.60.0
 ```
 ├── 690f_assignment1_final.ipynb  # Main Code
 ├── assets
-      ├──analysis_results.json             # Results
+      ├──analysis_results.json    # Results
       ├──log_roc.jpeg             # Log ROC Plot
       ├──auc.jpeg                 # Confusion matrix, perf metrics
       └──loss.jpeg                # Train and Eval Bar Plot
