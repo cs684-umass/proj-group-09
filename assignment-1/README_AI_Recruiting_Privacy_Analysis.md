@@ -418,6 +418,115 @@ tqdm>=4.60.0
 └── final_dataset.json            # Generated Resumes
 ```
 
+
+
+## Design Choices Documentation
+
+### Model Selection
+
+#### DistilBERT for Classification
+One of the main factor was this being used in code example given to us but then after further analysis, we stuck with it. 
+**Choice**: DistilBERT-base-uncased for sequence classification\
+**Rationale**: 
+- DistilBERT is 60% smaller and 60% faster than BERT while retaining 97% of its language understanding capabilities
+- Pre-trained on a large corpus, requiring minimal fine-tuning for resume classification tasks
+
+**Alternatives Considered**:
+- Full BERT: Too computationally expensive for extensive privacy analysis
+- Larger models (GPT-style): Overkill for binary classification task
+
+#### Mistral-7B for Data Generation  
+**Choice**: Mistral-7B-Instruct-v0.3 for synthetic resume generation\
+**Rationale**:
+- The instruct variant excels at following structured prompts for consistent data generation
+- Balanced model size providing high-quality text generation without extreme computational requirements
+
+### Synthetic Data Generation Strategy
+
+#### Template-Based Approach with LLM Enhancement
+**Choice**: Predefined job categories with LLM-generated content\
+**Rationale**:
+- Job categories (software engineer, data scientist, marketing, sales) provide structured variation
+- LLM generation produces human like resume text that models can memorize
+- Predictable patterns make it easier to design effective extraction attacks
+
+**Key Components**:
+- **Person Database**: 100 predefined name and email combinations for consistent identity patterns generated using AI and added to the code
+- **Skill Hierarchies**: Category specific skills and technologies for realistic variation
+- **Balanced Labels**: Equal suitable and unsuitable samples per category for unbiased training
+
+**Alternatives Considered**:
+- Real resume data: Privacy and legal concerns
+- Fully random generation: Too chaotic, difficult to design targeted attacks
+
+### Attack Strategy Design
+
+#### Multi-Modal Attack Approach
+**Choice**: Four attack types (membership inference, gradient-based extraction, template-based extraction, query based extraction)\
+**Rationale**:
+- Different attacks exploit different vulnerabilities
+- Enables analysis of attack strength vs reconstruction quality mismatch
+
+#### 1. Membership Inference Attack
+**Design**: Loss-threshold based with calibration evaluation split\
+**Rationale**:
+- Uses half the data to find optimal decision threshold, preventing overfitting to evaluation data
+- Models typically have lower losses on training data they've seen before
+- Provides threshold-independent assessment of privacy leakage
+
+#### 2. Gradient-Based Extraction
+**Design**: Optimizes learnable embeddings to maximize model confidence\
+**Rationale**:
+- Uses gradient descent to find inputs the model recognizes as "familiar"
+- Works in continuous embedding space for smoother optimization
+- High confidence typically indicates training data similarity
+
+**Limitations Acknowledged**:
+- Local minima issues  
+- Approximate text reconstruction from embeddings
+- Good on LLMs compared to classifers 
+
+#### 3. Template Based Extraction and query Based Extraction
+**Design**: Leverages domain knowledge of resume structure and keywords\
+**Rationale**:
+- Exploits known patterns in resume format and content
+- Attackers often have domain knowledge about target data
+
+### Evaluation and Analysis Framework
+
+#### Comprehensive Metrics
+**Choice**: Multiple evaluation dimensions (accuracy, AUC, precision, recall, confusion matrices)\
+**Rationale**:
+- Different metrics reveal different aspects of attack success
+- AUC based risk levels 
+- Confusion matrices show real world attack effectiveness
+
+#### Visualization Strategy  
+**Choice**: Multi panel plots with loss distributions, ROC curves, and statistical comparisons\
+**Rationale**:
+- Visual analysis makes privacy vulnerabilities clear
+- Box plots show distributional differences
+- Professional visualizations suitable for research communication
+
+#### Data Splitting Strategy
+**Choice**: 80/20 train/test split with stratification, then calibration/evaluation sub-splits\
+**Rationale**:
+- 80/20 split is widely accepted in ML
+- Calibration/evaluation design prevents threshold overfitting in membership inference attacks
+
+### Training Data extraction
+As our training data extracion wasn't successful, after further research found a paper https://arxiv.org/abs/2306.13789 which had a implementation of training data extraction attack but due to complexity I was not able to implement this particular variant of training data construction attack
+but theoretically the attack looks possible on classifiers as well.
+
+Here's a short abstrct about it
+
+```
+Most previous studies on data reconstruction attacks have focused on LLM, while classification models were assumed to
+be more secure. In this work, we propose a new targeted data reconstruction attack called the Mix And Match attack, which
+takes advantage of the fact that most classification models are based on LLM. The Mix And Match attack uses the base
+model of the target model to generate candidate tokens and then prunes them using the classification head.
+```
+
 ## Conclusions
 
 The analysis reveals a **moderate privacy vulnerability** in the AI recruiting system. While membership inference attacks achieved 80% accuracy, training data extraction was unsuccessful. This suggests the model exhibits statistical overfitting without direct content memorization.
