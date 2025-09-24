@@ -428,3 +428,9 @@ The analysis reveals a **moderate privacy vulnerability** in the AI recruiting s
 - Privacy risks in AI recruiting require proactive mitigation strategies
 - Regular privacy auditing should be standard practice for production ML systems
 
+## AI Disclosure
+
+* Training data extraction code skeleton was generated using AI and was then modified according to our project use case.
+* Boiler plate code to generate plots and staistics were AI Generated
+* analyze_attack_strength_vs_reconstruction_mismatch function structure was AI Generated to undestand the relation and then modified according to the use case and some reccommendations was taken from stackoverflow
+* For some bug fixes AI was used (don't have an exact code fix)
