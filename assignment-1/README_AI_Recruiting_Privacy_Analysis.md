@@ -66,6 +66,170 @@ Tyler Jackson - tyler.jackson@hotmail.com
 Marketing Professional with 5 years of experience in SEO, social media, and campaign 
 management. Proven ability to drive growth through creative and data-driven strategies.
 ```
+## Code Explaination
+
+### 1. Environment Setup
+
+Libraries like trasnformer, Pytorch, pandas and numpy are installed and seed value is set to make sure the random generation is controlled and reproducable
+
+### 2. Model loading (For Syntehtic data Generation).  and Classifier being attacked
+
+mistralai/Mistral-7B-Instruct-v0.3 is chosen for Synthetic data that is Resume summary generation, wher access to the model is acquired in huggingface repo and token is used for authentication and successful laoding of the model
+
+### 3. Categories and random PII Generation for Synthetic data structure
+
+4 Main Job categories are chosen for data generation where osme expected keywords and skills are predefined along with 100 random name and email address is generated which will be then used along for resume creation, a basic promp structure was finalised which would randomly pick a name and email from the list provided and generate the resume
+
+```python
+def generate_resume(job_category, is_suitable=True):
+```
+
+Also two main broad categories of data was generated one which is suitable for job category and one more which is not to train the classifier in the function as below and then data generated was converted to dataframe for easy handling of data
+
+```python
+def create_synthetic_dataset(num_samples=200):
+  ```
+
+### 4. Classification model is loaded
+
+distilbert-base-uncased was the binary classifier model chosen and the data generated in previous funciton was split into train and test plit of 80/20 ratios
+
+### 5. Training parameters
+
+Training parameter was chosen such as number of runs/epochs, loss metrics, log folder etc and the classifier was trained on the 
+train dataset and then evaluated on evaluate dataset where we saw training loss of 0.6221 and evaluation loss of 0.6944
+
+### 6. MIA Attack
+
+```python
+def per_example_loss(model, texts, labels, tokenizer):
+```
+This function is self explainatory as it finds the loss for each exmaple which is later used to calculate the threshold for MIA attack, in simple terms, example with lower loss was a member and example with higher loss was not a member
+
+```python
+def compute_detailed_losses(model, train_data, test_data, tokenizer):
+```
+This function then further divide train and test set into caliberation set and evaluation set, caliberation set is used to set the threashhold and evaluation set is then used to check if each sample with a loss is member or non member, this particular function is used for later forming loss graphs and loss statistics 
+
+```python
+def create_loss_visualizations(loss_data):
+```
+This function consumes the output of previous function to plot the bar graphs, boxplot graphs and cumulative function distribution
+
+Plot 1: Calibration Set: Loss Distribution
+Losses of each examples are grouped together and has been plot with x-axis as count and y-axis as Loss where we can see middle region is a place of overlap and it will be challenging to differentiate the exxamples present here.
+
+Plot 2: Evaluation Set: Loss Distribution
+Same as calibration set the evaluation set is plot here where non members will have higher loss and be on the right tail side of the graph indicating higher loss and members indicated in blue color will be on left tail side indicating lower losses.
+
+Plot 3: Loss Distribution Compariosion (Box Plots)
+The upper whisker and lower whisker are maximum and minimum losses respectively, you can see a trend where members have minimum value compared to non members in both calibration and evaluation set and maximum as well non members has one of the highest losses.
+
+Plot 4: Cumulative Distrubution Function
+Blue line here is members which is rising faster initially showing members are present here and red line raises slowly indicating non members and that difference in cruves tells us members apart from non members.
+
+```python
+    fpr, tpr, thresholds = roc_curve(eval_membership_labels, membership_scores)
+```
+this is a predefined function present in sci-kit learn library which takes two input, true binary labels indicating each exmaple is member or not and -eval_losses here -ve sign is used as roc function expects positive class to have higher scores so we used negative sign to turn lower losses into higher, the function returns false positive rate, true positive rate(correct guesses) and threshold to divide FPR and TPR
+
+```python
+def comprehensive_attack_analysis(eval_losses, eval_membership_labels, best_threshold):
+```
+This function calculates auc , fpr, tpr and also forms confusion matrix using true positive, false positive, true negative and false negative as plot components. Further many metrics like accuracy , precision, recall, f1 score and specificity are calculated based on (true positive, false positive, true negative and false negative) to give more insights, also Receiver Operating Characteristic (ROC) curve is plotted for our binary classifier using true positive and false positive rates.
+
+```python
+def add_loglog_roc_plot(results, title_suffix=""):
+```
+The use of a logarithmic scale Receiver Operating Characteristic (ROC) curve for evaluating Membership Inference Attacks (MIAs) was suggested as privacy is a worst case security concern, not an average case metric. Traditional metrics like ROC-AUC are inadequate as they average attack accuracy over irrelevant high error rates, masking the actual privacy risk. The log-scale ROC curve is necessary to accurately assess attack performance by emphasizing the crucial low False-Positive Rate (FPR) regime, which demonstrates an attack’s ability to confidently and reliably violate the privacy of even a few users in a sensitive dataset
+
+```python
+def membership_inference_attack(model, train_data, test_data, tokenizer):
+    thresholds = np.percentile(cal_losses, np.linspace(1, 99, 99))
+    best_threshold = None
+    best_accuracy = -1
+
+    for threshold in thresholds:
+        # Predict membership: if loss < threshold, then member (1), else non-member (0)
+        predictions = (cal_losses < threshold).astype(int)
+        accuracy = (predictions == np.array(cal_membership_labels)).mean()
+
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
+            best_threshold = threshold
+```
+This is where actual MIA attack is implemented where calibration set is used to get the best threshold and then that threshold is used on eval set and attack accuracy is calculated 
+
+### 7. Training Data Extraction
+
+#### Gradient Based Extraction
+ 
+ ```python
+def gradient_based_extraction(self, target_tokens, max_iterations=100, learning_rate=0.01):
+ ```
+This is a traditional data reconstruction attack using gradient descent, a reverse engineering technique, some learnable embedding vector is initalized, we use adam optimizer to refine embedding in every iteration, we then do a forward pass through model by passing the embeddings through the classifier and then loss is calculated and then backward pass is done while gradient is compute and then embeddings is updated based on model confidence and gradient calculated to reduce the loss and this happens 100 times as max iterations is set, untill we have embeddings with high confidence
+
+```python
+def embedding_to_text_reconstruction(self, embeddings):
+  similarities = F.cosine_similarity(current_embedding.unsqueeze(1), vocab_embeddings.unsqueeze(0), dim=2)
+  top_values, top_indices = torch.topk(similarities, top_k)
+```
+This function is used convert the optimized embeddings to readable text based on nearest neighbour.
+
+#### Template Based Extraction
+
+```python
+def template_based_extraction(self, job_categories):
+```
+This attack uses common resume structure and replace the keywords in the templates and then processes through the classifier to get confidence and based on that, tries to reconstruct the data and if confidence is more than a certain threshold the text can be added as member.
+
+* Template Population: For each job category, the function fills templates with category-specific information from get_category_info()
+* Candidate Generation: Creates multiple variations using generate_template_candidates()
+* Confidence Scoring: Uses score_resume_candidate() to evaluate how "familiar" each candidate appears to the model
+* Filtering: Only keeps candidates with confidence > 0.6, indicating the model recognizes them as training-like data
+
+```python
+ def get_prediction_confidence(self, text):
+```
+This snipped is used to get confidence of any given text
+
+#### Query Based Extraction
+```python
+def query_based_extraction(self, num_queries=500):
+```
+There are 3 strategies here:
+
+Completion Queries (generate_completion_query()): Uses partial resume text: "Experienced Sales Professional for software engineer". Attempts to trigger completion of memorized training sequences
+
+Keyword Queries (generate_keyword_query()): Combines resume relevant keywords: "python experience software". Tests if specific keyword combinations produce high confidence
+
+Structure Queries (generate_structure_query()): Uses common resume phrases: "years of experience", "skilled in programming". Exploits structural patterns the model learned
+
+high level attack process is something similar
+
+* Systematic Querying: Generates 500 queries across different types
+* Response Analysis: For each query, measures model confidence using get_prediction_confidence()
+* Pattern Recognition: High-confidence responses (>0.6) suggest the query resembles training data
+* Data Collection: Stores successful queries and their confidence scores for analysis
+
+```python
+if self.calculate_text_similarity(extracted_text, train_text) > 0.5:
+if self.calculate_semantic_similarity(extracted_text, train_text) > 0.6:
+```
+After all the attacks the above similarity is calculated to see the statictics of the attack
+
+### 8. Reflection on Attack
+
+```python
+def run_comprehensive_extraction_attack(cls_model, cls_tokenizer, train_texts, test_texts, job_categories):
+
+def analyze_attack_strength_vs_reconstruction_mismatch(mia_results, extraction_results):
+
+def save_analysis_results(loss_data, attack_results):
+
+```
+
+These functions are run to capture the stats and progress of ther attacks and store the results
 
 ## Attack Implementation
 
