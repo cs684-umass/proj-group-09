@@ -85,7 +85,7 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 
 - **Partitioning Strategy**:  
   - **Clients**: 5 simulated organizations.  
-  - **Split**: Shuffled dataset before dividing into clients, with each client getting roughly 600 samples. The initial dataset is balanced with suitable/unsuitable resumes, so iid data.
+  - **Split**: Shuffled dataset before dividing into clients, with each client getting roughly 400 samples after training/test split. The initial dataset is balanced with suitable/unsuitable resumes, so iid data.
   - **Motivation**: Since there are few big organizations with many resumes, used a small number of clients. Each client company would have many more resumes since the data would be concentrated.
 
 - **Why IID?**  
@@ -152,16 +152,16 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 ## 4. Aggregation Method – FedAvg
 
 **Algorithm Flow**:  
-1. Server initializes and distributes the global model to all clients.  
-2. Each client performs local training (3 epochs).  
-3. Clients upload updated weights to server.  
-4. Server computes **weighted average** of client updates, weighted by dataset size.  
-5. New global model redistributed to all clients.  
+1. Server initializes and distributes the global model to all clients. Simulated using a for loop. Each client gets a new instantiation with the current global weights 
+2. Each client performs local training (3 epochs) with DataLoader
+3. Clients upload updated weights to server. This is sumlated by using client_model.state_dict(), since the client data is in the same for loop.
+4. Server computes **weighted average** of client updates, weighted by dataset size. In this case the split was even, so effectively calculating standard average. In the real world, it helps with giving more importance to clients with more data.
+5. New global model redistributed to all clients by going to step 1 to start new round within the loop. Goes on until desired rounds (20 in this case) are complete.  
 
 **Why FedAvg?**  
 - Simple and computationally cheap.  
 - Strong baseline in heterogeneous settings.  
-- Alternatives (FedProx, Scaffold) may improve performance in extreme non-IID, but not required here.  
+- Alternatives (FedProx, Scaffold) may improve performance in extreme non-IID, but not required here
 
 ---
 
@@ -238,6 +238,6 @@ This project demonstrates:
 
 * Generating templates and keywords and setting up the synthetic dataset with variable number of sentences and keywords in each entry was done with AI
 * A boilerplate bi-directional LSTM implementation was generated with AI and then hyperparameters were tuned
-* Averaging weights logic after each round for federated learning was generated with AI
+* Averaging weights logic after each round for federated learning and general scaffolding using psuedocode was generated with AI
 * Plotting the 3 separate graphs was done using AI
 * Formatting this README
