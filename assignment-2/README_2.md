@@ -167,18 +167,14 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 
 ## 5. Communication Cost Analysis
 
-Formula:  
-\[
-\text{Cost} = 2 \times (\#\text{params} \times 4 \text{ bytes}) \times \#\text{clients} \times \#\text{rounds}
-\]
+**Formula:**  
+`Cost = 2 × (#params × 4 bytes) × #clients × #rounds`
 
-- **Model Parameters**: ~821,729  
+- **Model Parameters**: ~821,729 (calculation in report)  
 - **Parameter Size**: ~3.3 MB (float32)  
 - **FL (20 rounds, 5 clients)**:  
-  \[
-  2 \times 821,729 \times 4 \times 5 \times 20 \approx 656 \text{ MB}
-  \]  
-- **Centralized Baseline**: Uploading resumes (~1500 samples × 400 bytes each = 600 KB) is **orders of magnitude smaller**.  
+`2 × 821,729 × 4 × 5 × 20 ≈ 630 MB`
+- **Centralized Baseline**: Uploading resumes (~3000 samples × 200 words × 5 bytes each = 1.54 MB) is **orders of magnitude smaller**.  
 
 **Observation**:  
 - Centralized → communication cost is negligible.  
@@ -239,5 +235,6 @@ This project demonstrates:
 * Generating templates and keywords and setting up the synthetic dataset with variable number of sentences and keywords in each entry was done with AI
 * A boilerplate bi-directional LSTM implementation was generated with AI and then hyperparameters were tuned
 * Averaging weights logic after each round for federated learning and general scaffolding using psuedocode was generated with AI
+* Formula to calculate the number of parameters in the model for Communication Overhead
 * Plotting the 3 separate graphs was done using AI
 * Formatting this README
