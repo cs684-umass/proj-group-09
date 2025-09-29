@@ -96,21 +96,21 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 ## 2. Model Architecture – ResumeLSTM
 
 - **Text Embedding Layer**  
-  - Input: token IDs from resumes.  
+  - Input: token IDs from resumes text, which allows the model to understand keywords 
   - Output: 128-dim dense embeddings per token.  
 
 - **Category Embedding Layer**  
-  - Input: discrete job category ID.  
+  - Input: discrete job category ID
   - Output: 32-dim dense embedding vector. Both text embedding and category are used together because classification should be with respect to the job category. 
 
 - **Bidirectional LSTM**  
   - Hidden size: 256 per direction.  
-  - Processes resumes left-to-right and right-to-left.  
-  - Captures both **local syntax** (short-term) and **global semantics** (long-term). Kept it medium sized since synthetic data has a trivial pattern and training is easier with this architecture. 
+  - Processes resumes left-to-right and right-to-left. Need bidirectional because resumes don't always follow the same order for information. For example some candidates might have experience first, while others would have education.
+  - Captures both **local syntax** (a phrase) and **global semantics** (a sentence). Kept it medium sized since synthetic data has a trivial pattern and training is easier with this architecture. 
 
 - **Pooling & Concatenation**  
   - Apply **mean pooling** over all hidden states.  
-  - Concatenate with category embedding → combined representation.  
+  - Concatenate with category embedding → combined representation. Combines category and text embedding 
 
 - **Dropout (p=0.3)**  
   - Regularization to reduce overfitting.  
@@ -121,8 +121,8 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 
 **Design Justification**:  
 - LSTM strikes balance between **expressiveness** and **efficiency**.  
-- Transformer models could improve F1 but would dramatically increase communication in FL.  
-- Explicit category embeddings allow the model to incorporate prior knowledge (job domain).  
+- Transformer models could improve F1 but would dramatically increase communication in FL due to size of the model 
+- Explicit category embeddings allow the model to incorporate prior knowledge (job domain). Explicit embeddings inject prior knowledge: The same resume should be scored differently depending on whether the target is Software Engineer vs. Product Manager.
 
 ---
 
@@ -188,14 +188,18 @@ Formula:
 
 ## 6. Performance Comparison
 
+![image info](assets/download%20(1).png)
+![image info](assets/download%20(2).png)
+![image info](assets/download.png)
+
 | Training Setup | Accuracy | F1 Score | Convergence | Communication Overhead |
 |----------------|----------|----------|-------------|-------------------------|
 | Centralized    | 0.84    | 85.0%    | Faster      | Minimal (single upload of dataset) |
 | FedAvg (5 clients, 20 rounds, 3 local epochs) | 0.87 | 87% | Slower | High (≈600 MB model transfer) |
 
 **Key Insights**:  
-- Centralized achieves faster convergence and slightly better accuracy.  
-- FedAvg lags slightly but still competitive in F1, showing FL can protect privacy with minor performance trade-off.  
+- Centralized achieves faster convergence though the ending performance for federated learning is better  
+- FedAvg and Centralized model perform similarly for F1. The gap between the two is greater for loss, with FedAvg ending at a lower loss  
 - Communication overhead in FL is the **biggest bottleneck**.  
 
 ---
@@ -225,15 +229,15 @@ Formula:
 ## 9. Summary
 
 This project demonstrates:  
-- **Centralized training** → performance upper bound with low communication cost.  
-- **Federated training (FedAvg)** → enables decentralized training with competitive performance but significantly higher communication.  
-- **ResumeLSTM** → balances sequence modeling and efficiency, making it a practical choice for federated scenarios.  
+- **Centralized training** → performance upper bound with low communication cost in the scenario where number of clients and data outweight the model size 
+- **Federated training (FedAvg)** → enables decentralized training with competitive performance but significantly higher communication for this specific setup
+- **LSTM** → balances sequence modeling and efficiency, making it a practical choice for federated scenarios.  
 
 
 ## AI Disclosure
 
 * Generating templates and keywords and setting up the synthetic dataset with variable number of sentences and keywords in each entry was done with AI
 * A boilerplate bi-directional LSTM implementation was generated with AI and then hyperparameters were tuned
-* Averaging weights logic after each round was generated with AI
+* Averaging weights logic after each round for federated learning was generated with AI
 * Plotting the 3 separate graphs was done using AI
 * Formatting this README
