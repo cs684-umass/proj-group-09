@@ -279,4 +279,5 @@ To demonstrate the practical impact of DP, a loss-based Membership Inference Att
 
 synthetic_resumes_enhanced.csv    Dataset  
 DP_SGD_Implementation.ipynb       Colab notebook (some functions are repeated because each cell was run in an independent environment)
+DP-SGD Implementation - Colab.ipynb       PDF with outputs
 
