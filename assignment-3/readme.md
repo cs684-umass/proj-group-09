@@ -269,11 +269,14 @@ To demonstrate the practical impact of DP, a loss-based Membership Inference Att
 * For MIA, used implementation of assignment 1 and AI to setup basic skeleton
 * Formatting the readme for better readability and an initial scaffolding to edit
 
-## Format
+## Project Structure
 
-/assets
-    /dp 1 = Plot for the large table
-    /dp 2 = Plot for smaller grid given in assignment
-    /Screensot = MIA attack result
-synthetic_resumes_enhanced.csv = Dataset
-DP_SGD_Implementation.iypnb = Colab notebook. Some functions are repeated because each cell was run in an indepndent environment
+/assets  
+│  
+├── /dp 1               Plot for the large table  
+├── /dp 2               Plot for smaller grid given in assignment  
+├── /Screenshot         MIA attack result  
+
+synthetic_resumes_enhanced.csv    Dataset  
+DP_SGD_Implementation.ipynb       Colab notebook (some functions are repeated because each cell was run in an independent environment)
+
