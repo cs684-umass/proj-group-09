@@ -168,7 +168,7 @@ Brief overview of privacy design again in context of project
 * **Delta ($\delta$)**: Set to `1 / len(train_dataset)` (approximately `1.59E-04`).
 * **Hyperparameter Sweep Grid**:
     * **Learning Rate ($\text{lr}$)**: `{0.005, 0.001, 0.0005}`
-    * **Clipping Norm ($C$)**: `{0.5, 1.0, 3.31*}` (*The value 3.31 was determined adaptively by finding the median gradient norm, a best practice from Abadi et al.*)
+    * **Clipping Norm ($C$)**: `{0.5, 1.0, 3.4*}` (*The value 3.4 was determined adaptively by finding the median gradient norm from research paper*)
     * **Noise Multiplier ($\sigma$)**: `{0.2, 0.4, 0.8, 1.2, 1.5}`
 
 ## Results
@@ -177,7 +177,7 @@ The hyperparameter sweep produced a clear trade-off between model utility (F1 Sc
 
 ### Performance Comparison
 
-Big Grid Sweep
+Big Grid Sweep (Different instance of the dataset so median clip norm is 3.67)
 
 | Learning Rate | Clip Norm (C) | Noise (σ) | Final ε | Test Accuracy | Test F1 Score |
 |:--------------|:--------------|:----------|:--------|:--------------|:--------------|
@@ -211,22 +211,22 @@ Big Grid Sweep
 
 ![image info](assets/dp%201.png)
 
-Final Smaller Grid
+Final Smaller Grid (Median Norm = 3.4)
 
 | Setting (C, σ, LR)    | LR    | Clip Norm (C) | Noise (σ) | Final ε | Test Accuracy | Test F1 Score |
 |:----------------------|:------|:--------------|:----------|:--------|:--------------|:--------------|
-| Baseline | 0.001 | n/A          | N/A       | 0    | 0.9956        | 0.9983        |
-| C=2.91, σ=0.5, LR=0.005 | 0.005 | 2.91          | 0.5       | 8.12    | 0.8956        | 0.8949        |
-| C=0.5, σ=0.5, LR=0.005  | 0.005 | 0.50          | 0.5       | 8.12    | 0.8356        | 0.8303        |
-| C=1.0, σ=0.5, LR=0.005  | 0.005 | 1.00          | 0.5       | 8.12    | 0.8356        | 0.8232        |
-| C=0.5, σ=1, LR=0.005    | 0.005 | 0.50          | 1.0       | 1.50    | 0.7659        | 0.7775        |
-| C=2.91, σ=1, LR=0.005   | 0.005 | 2.91          | 1.0       | 1.50    | 0.8044        | 0.7740        |
-| C=2.91, σ=2, LR=0.005   | 0.005 | 2.91          | 2.0       | 0.33    | 0.7259        | 0.7193        |
-| C=1.0, σ=1, LR=0.005    | 0.005 | 1.00          | 1.0       | 1.50    | 0.7570        | 0.7102        |
-| C=1.0, σ=2, LR=0.005    | 0.005 | 1.00          | 2.0       | 0.33    | 0.7037        | 0.6894        |
-| C=0.5, σ=2, LR=0.005    | 0.005 | 0.50          | 2.0       | 0.33    | 0.5674        | 0.4701        |
+| Baseline | 0.001 | n/A          | N/A       | 0    | 0.9978        | 0.9978        |
+| C=3.4, σ=0.5, LR=0.005 | 0.005 | 3.4          | 0.5       | 8.12    | 0.8940        | 0.8956        |
+| C=1, σ=0.5, LR=0.005  | 0.005 | 1          | 0.5       | 8.12    | 0.8807        | 0.8774        |
+| C=0.5, σ=0.5, LR=0.005  | 0.005 | 0.5          | 0.5       | 8.12    | 0.8585        | 0.8644        |
+| C=3.4, σ=1, LR=0.005    | 0.005 | 0.50          | 1.0       | 1.50    |  0.8370       | 0.8398        |
+| C=1.0, σ=1, LR=0.005   | 0.005 | 1          | 1.0       | 1.50    | 0.7948        | 0.8134        |
+| C=0.5, σ=1, LR=0.005   | 0.005 | 0.5          | 1.0       | 1.50    | 0.7644        | 0.7366        |
+| C=1.0, σ=2, LR=0.005    | 0.005 | 1.00          | 2.0       | 0.33   | 0.7044        | 0.6632        |
+| C=3.4, σ=2, LR=0.005    | 0.005 | 3.4          | 2.0       | 0.33    | 0.6740        | 0.6557        |
+| C=0.5, σ=2, LR=0.005    | 0.005 | 0.50          | 2.0       | 0.33    | 0.5874        | 0.5301        |
 
-![image info](assets/dp%202.png)
+![image info](assets/download.png)
 
 
 *Figure: The learning curves show that the non-private baseline (black dashed line) converges quickly to perfect accuracy. The DP-SGD models learn more slowly and converge to lower final accuracies, with the level of utility directly corresponding to the amount of noise and other hyperparameters.*
@@ -235,12 +235,12 @@ Final Smaller Grid
 
 To demonstrate the practical impact of DP, a loss-based Membership Inference Attack was performed. The core intuition is that models exhibit lower loss on training examples they have "memorized." The attack works by training a simple logistic regression classifier to predict whether a sample was in the training set based solely on the target model's loss value for that sample.
 
-![image info](assets/Screenshot.png)
+![image info](assets/screen.png)
 
-* **Baseline Model MIA Accuracy: 73%**
+* **Baseline Model MIA Accuracy: 69%**
     The high attack accuracy indicates a privacy leak. An attacker can determine with decent certainty whether a specific person's resume was used to train the model, confirming that the non-private model is vulnerable.
 
-* **DP-SGD Model MIA Accuracy: 68%, C=2.91, σ=0.5, LR=0.005**
+* **DP-SGD Model MIA Accuracy: 60%, C=3.4, σ=1, LR=0.005, ε ≈ 1.5**
     This attack accuracy is slightly less than baseline. This demonstrates that DP-SGD was is more resistant, but to get better performance, we have to use one of the other parameters with more noise and compromise on accuracy.
 
 ## Conclusions
@@ -251,7 +251,7 @@ To demonstrate the practical impact of DP, a loss-based Membership Inference Att
 
 * **A "Good Enough" Private Model is Achievable**: For a low-stakes application like internal HR analytics, the "Balanced DP-SGD" model with an F1 score of ~0.80 and a strong privacy guarantee (ε ≈ 2.6) is an excellent and practical outcome. This demonstrates the feasibility of building useful machine learning systems that respect user privacy.
 
-* **DP is a Practical and Effective Defense Against MIA**: The Membership Inference Attack provides a validation of DP's theoretical promise to an extent. The attack was reasonably successful on the non-private model but was less so on the DP-SGD model, with its accuracy dropping from 73% to 68%. It would be even lower with other parameters where the ε isn't as high as 8.
+* **DP is a Practical and Effective Defense Against MIA**: The Membership Inference Attack provides a validation of DP's theoretical promise to an extent. The attack was reasonably successful on the non-private model but was less so on the DP-SGD model, with its accuracy dropping from 69% to 60%. It would be even lower with other parameters where the ε is lower.
 
 ### **Final Takeaways**
 
@@ -274,8 +274,8 @@ To demonstrate the practical impact of DP, a loss-based Membership Inference Att
 /assets  
 │  
 ├── /dp 1               Plot for the large table  
-├── /dp 2               Plot for smaller grid given in assignment  
-├── /Screenshot         MIA attack result  
+├── /download               Plot for smaller grid given in assignment  
+├── /screen         MIA attack result  
 
 synthetic_resumes_enhanced.csv    Dataset  
 DP_SGD_Implementation.ipynb       Colab notebook (some functions are repeated because each cell was run in an independent environment)

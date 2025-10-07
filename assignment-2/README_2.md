@@ -8,7 +8,7 @@ Implemented federated learning for an AI-powered resume screening system, compar
 This project demonstrates the importance of federated learning. Instead of training a centralized model, server and client communication is simulated to train a FedAvg algorithm with decentralized data.
 
 ## Steps to Run
-Run each cell sequentially
+Python Notebook so run each cell sequentially
 
 ## Dataset
 
@@ -88,8 +88,24 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
   - **Split**: Shuffled dataset before dividing into clients, with each client getting roughly 400 samples after training/test split. The initial dataset is balanced with suitable/unsuitable resumes, so iid data.
   - **Motivation**: Since there are few big organizations with many resumes, used a small number of clients. Each client company would have many more resumes since the data would be concentrated.
 
-- **Why IID?**  
+- **Why use IID first?**  
   - For a simple architecture, using IID is better as performance is better even it is not representative of real life scenarios. One of the primary reasons for implementing FL is to make a privacy aware system which is still achieved with IID data.  
+
+- **How is non IID implemented?**    
+The non-IID setup is designed to simulate a more realistic scenario where different clients (e.g., recruiting agencies) might specialize in different job types. This is achieved by giving each client an unbalanced or skewed distribution of the job categories.
+
+The process works in four main steps, looping through each job category one at a time:
+
+  1.  Isolate by Category: Gather all the training data that belongs to a single job category, for instance, all "Software Engineer" resumes.
+
+  2.  Generate Proportions with Dirichlet: For that single category, the code uses a Dirichlet distribution to generate a random set of proportions for the clients.
+
+  3.  Split the Data: The list of "Software Engineer" resumes is then split into chunks according to the proportions generated in the previous step.
+
+  4.  Assign and Repeat: Each client receives their assigned chunk of "Software Engineer" resumes. The process then repeats from Step 1 for the "Product Manager" resumes, and finally for the "Designer" resumes.
+
+After this process is complete, each client has a unique and unbalanced mix of data. For example, Client 1 might end up with many Software Engineer resumes but very few Designer resumes, which successfully simulates a non-IID environment.
+
 
 ---
 
@@ -123,6 +139,32 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 - LSTM strikes balance between **expressiveness** and **efficiency**.  
 - Transformer models could improve F1 but would dramatically increase communication in FL due to size of the model 
 - Explicit category embeddings allow the model to incorporate prior knowledge (job domain). Explicit embeddings inject prior knowledge: The same resume should be scored differently depending on whether the target is Software Engineer vs. Product Manager.
+
+#### Current Architecture: ResumeLSTM
+
+* **Architecture**: A Bidirectional LSTM with text and category embedding layers.
+* **Justification**: The Bi-LSTM strikes a good balance between **performance and efficiency**. It captures sequential information in the resume text (e.g., the context of a keyword), which is crucial for classification, without the massive parameter count of larger models. This is especially important in a federated setting where model weights are transferred repeatedly.
+
+#### Alternative Model Architectures
+
+* **Simpler Model (e.g., TF-IDF + Logistic Regression)**
+    * **How it works**: This "bag-of-words" approach ignores word order and represents resumes based on the frequency of keywords (e.g., TF-IDF score).
+    * **Tradeoffs**:
+        * **Pros**: Extremely lightweight and fast. Communication cost in FL would be minimal due to the very small model size.
+        * **Cons**: Fails to capture context or sequence, leading to significantly lower accuracy. It cannot distinguish between "experience in system design" and "designed a system for experience management."
+
+* **Complex Model (e.g., Transformer-Based like BERT)**
+    * **How it works**: Uses attention mechanisms to build deep contextual understanding of text with very good performance.
+    * **Tradeoffs**:
+        * **Pros**: Highest potential for accuracy and F1-score by understanding nuanced language.
+        * **Cons**: **Massive model size** leads to significant communication overhead, making it impractical for this FL setup. As noted in the analysis, communication is already the biggest bottleneck even with a smaller LSTM model. Training would also be much slower on client devices.
+
+* **Alternative Sequence Model (e.g., 1D-CNN)**
+    * **How it works**: Uses 1D convolutional filters to identify key local patterns or phrases (n-grams) within the text.
+    * **Tradeoffs**:
+        * **Pros**: Generally faster to train than an LSTM and effective at capturing informative local phrases.
+        * **Cons**: Less effective at modeling long-range dependencies in text compared to a Bi-LSTM. The sentences in this dataset range from 80-120 words.
+
 
 ---
 
@@ -184,19 +226,21 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 
 ## 6. Performance Comparison
 
-![image info](assets/download%20(1).png)
-![image info](assets/download%20(2).png)
-![image info](assets/download.png)
+![image info](assets/accuracy.png)
+![image info](assets/loss.png)
+![image info](assets/validation_f1.png)
 
 | Training Setup | Accuracy | F1 Score | Convergence | Communication Overhead |
 |----------------|----------|----------|-------------|-------------------------|
-| Centralized    | 0.84    | 85.0%    | Faster      | Minimal (single upload of dataset) |
-| FedAvg (5 clients, 20 rounds, 3 local epochs) | 0.87 | 87% | Slower | High (≈600 MB model transfer) |
+| Centralized    | 0.995    | 99.5%    | Fastest      | Minimal (single upload of dataset) |
+| IID FedAvg (5 clients, 20 rounds, 3 local epochs) | 0.973 | 97% | Slowest | High (≈600 MB model transfer) |
+| Non-IID FedAvg (5 clients, 20 rounds, 3 local epochs) | 0.995 | 99.5% | Relatively Fast | High (≈600 MB model transfer) |
 
 **Key Insights**:  
-- Centralized achieves faster convergence though the ending performance for federated learning is better  
-- FedAvg and Centralized model perform similarly for F1. The gap between the two is greater for loss, with FedAvg ending at a lower loss  
-- Communication overhead in FL is the **biggest bottleneck**.  
+- Centralized achieves fastest convergence to an almost perfect score  
+- All three perform similarly for accuracy and F1. Surprisingly, the Non-IID setup and centralized model end up with the same results instead of IID setup performing better than Non-IID
+- Communication overhead for both FL models is the **biggest bottleneck**.  
+- Non-IID Setup might actually work in favour of the model, as each job category is independent of the other job categories. This leads the client to becomre better experts at the job category given to them. In the real world, it makes sense that companies have resumes specialized to their job categories so skewed data works in favour of the model.
 
 ---
 
@@ -225,7 +269,7 @@ Generates a full synthetic dataset of resumes for all job categories, balancing 
 ## 9. Summary
 
 This project demonstrates:  
-- **Centralized training** → performance upper bound with low communication cost in the scenario where number of clients and data outweight the model size 
+- **Centralized training** → performance upper bound with low communication cost in the scenario where number of clients and data outweight the model size. In this case, the dataset was too small relative to the model, so communication benefits are not observed
 - **Federated training (FedAvg)** → enables decentralized training with competitive performance but significantly higher communication for this specific setup
 - **LSTM** → balances sequence modeling and efficiency, making it a practical choice for federated scenarios.  
 
@@ -237,4 +281,14 @@ This project demonstrates:
 * Averaging weights logic after each round for federated learning and general scaffolding using psuedocode was generated with AI
 * Formula to calculate the number of parameters in the model for Communication Overhead
 * Plotting the 3 separate graphs was done using AI
-* Formatting this README
+* Formatting this README and making some sections more direct
+
+## Project Structure
+
+/assets  
+│  
+├── /accuracy               Plot for epoch vs accuracy  
+├── /loss               Plot for epoch vs loss    
+├── /validation_f1         Plot for epoch vs F1 score  
+synthetic_resumes_balanced.csv    Dataset  
+690F_Assignment_2.ipynb       Colab notebook
