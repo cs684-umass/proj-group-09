@@ -46,7 +46,7 @@ This method aims to mask most of the PII while revealing a small, less sensitive
 | PII Category | Partial Masking Logic | Example |
 | :--- | :--- | :--- |
 | **EMAIL** | Keep **first character** of the local-part, mask the rest with `*`, and keep the full domain. | `k***********@gmail.com` |
-| **PHONE** | Replace all digits except the **last 4** with `*`, while preserving non-digit characters (e.g., `.`, `-`, `()`). | `+*-***-***-****x1039` |
+| **PHONE** | Replace all digits except the **last 4** witfh `*`, while preserving non-digit characters (e.g., `.`, `-`, `()`). | `+*-***-***-****x1039` |
 | **DATE/DOB** | Aims to mask the day part, keeping **month and year** (if present in common formats). Uses `**` to mask the day. | `** January 1990` |
 | **NAME** | *Not implemented for partial masking in the notebook.* | |
 
@@ -65,6 +65,28 @@ The distributions suggest:
 | **EMAIL** | Both methods show **high performance** (mostly concentrated at 1.0) due to the rigid, predictable structure of emails, though the LLM's distribution appears slightly more concentrated. |
 | **PHONE** | Both methods show **high performance** (mostly concentrated at 1.0) due to the strong structural patterns, though different formats introduce some variance. |
 
+#### Distribution Plots for Regex Method per Category
+
+![Project Screenshot](plots/p_r_f_name_regex.png)
+
+![Project Screenshot](plots/p_r_f_date_regex.png)
+
+![Project Screenshot](plots/p_r_f_email_regex.png)
+
+![Project Screenshot](plots/p_r_f_phone_regex.png)
+
+
+#### Distribution Plots for LLM Method per Category
+
+![Project Screenshot](plots/p_r_f_name_llm.png)
+
+![Project Screenshot](plots/p_r_f_date_llm.png)
+
+![Project Screenshot](plots/p_r_f_email_llm.png)
+
+![Project Screenshot](plots/p_r_f_phone_llm.png)
+
+
 ### Micro-Average Performance
 
 The micro-average results aggregate True Positives (TP), False Positives (FP), and False Negatives (FN) across all categories for each sample.
@@ -74,16 +96,17 @@ The micro-average results aggregate True Positives (TP), False Positives (FP), a
 | **Regex** | ~0.70 - 0.90 (Variable distribution) | ~0.80 - 1.0 (Concentrated at higher values) | ~0.80 - 1.0 (Concentrated at higher values) |
 | **LLM** | ~0.80 - 1.0 (Highly concentrated at higher values) | ~0.80 - 1.0 (Highly concentrated at higher values) | ~0.80 - 1.0 (Highly concentrated at higher values) |
 
+#### Distribution plots - Micro
+
+![Project Screenshot](plots/p_r_f_micro_regex.png)
+
+![Project Screenshot](plots/p_r_f_micro_llm.png)
+
 The histograms suggest that the **LLM-based detection achieves a tighter distribution of high scores** compared to the Regex method, indicating **higher overall PII detection accuracy and lower false positives/residual leakage** in general across the dataset, particularly for the challenging NAME field.
 
 ### Residual Leakage
 
 Residual leakage, indicated by **lower Recall**, primarily occurs when a PII item in the ground truth is missed by the detector. The most notable issue here is the **variability and low average performance in DATE/DOB detection** for both methods, which suggests a significant risk of dates (especially less common formats) remaining in the redacted text.
-
-### Runtime
-
-* **Regex Detector:** Extremely fast, completing detection for all 100 samples in **0.003s** (`100it [00:00, 32283.74it/s]`).
-* **LLM Detector:** Very slow, completing redaction for 100 samples in **39 minutes and 23 seconds** (`100/100 [39:23<00:00, 23.63s/it]`). The LLM model used (`gpt-5` in the call, likely a placeholder for a specific HF model or API call in the notebook, or a very large/slow model) is orders of magnitude slower than regex, making it impractical for high-throughput applications.
 
 ## 5. Adversarial Tests
 
