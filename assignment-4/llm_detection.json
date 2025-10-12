@@ -1,0 +1,1850 @@
+{
+    "1": {
+        "text": "[REDACTED_NAME]\n[REDACTED_EMAIL] | [REDACTED_PHONE]\nData Scientist with a passion for using advanced analytics and machine learning to transform data into real-world business solutions. Proficient in Python, R, and machine learning techniques. Demonstrated success in data analysis, model development, and deployment at XYZ Corporation (2018-2020)",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Nicholas Bowers"
+            },
+            {
+                "category": "EMAIL",
+                "value": "nicholas.bowers@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "5526000031"
+            }
+        ]
+    },
+    "2": {
+        "text": "[REDACTED NAME]\n[REDACTED EMAIL](mailto:[REDACTED EMAIL]) │ [REDACTED PHONE] │ DOB: [REDACTED DATE]\n\nData Scientist with a strong academic background in mathematics and statistics. Proficient in Python, R, and machine learning, utilizing these skills to develop data-driven solutions",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Erin Molina"
+            },
+            {
+                "category": "EMAIL",
+                "value": "erin.molina@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "092.113.9423"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "01-07-2006"
+            }
+        ]
+    },
+    "3": {
+        "text": "Remove PII from this resume: [REDACTED-NAME]\nData Scientist\n[REDACTED-DATE][REDACTED-EMAIL][REDACTED-PHONE]\n\nExperienced Data Scientist specialized in data analysis, machine learning, and predictive modeling using Python, R, and SQL. Proficient in data wrangling, exploratory data analysis, and model development. With over 5 years of professional experience",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Melissa Garza"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "21 December 2005"
+            },
+            {
+                "category": "EMAIL",
+                "value": "melissa.garza@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "053.173.8679"
+            }
+        ]
+    },
+    "4": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL](mailto:[EMAIL]) - [PHONE]\n[DATE]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and ML technologies. Demonstrated success",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Susan Webster"
+            },
+            {
+                "category": "EMAIL",
+                "value": "susan.webster@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "115.755.7405"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "21-08-1971"
+            }
+        ]
+    },
+    "5": {
+        "text": "[REDACTED]\nData Scientist | [REDACTED] | [REDACTED]\nDate of Birth: [REDACTED]\n\nExperienced Data Scientist with a strong analytics background, proficient in Python, R, and Machine Learning. Over 10 years of experience in data analysis and modeling, using statistical methodologies to drive strategy and",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Lori Bradley"
+            },
+            {
+                "category": "EMAIL",
+                "value": "lori.bradley@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-154-979-6456"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "1973/11/15"
+            }
+        ]
+    },
+    "6": {
+        "text": "[NAME]\n[EMAIL] | [PHONE]\n[DATE/DOB]\n\nData Scientist with a strong background in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and other data science tools. Leveraging over 10 years of experience in data-driven projects, driving insights and delivering action",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Megan Lee"
+            },
+            {
+                "category": "EMAIL",
+                "value": "megan.lee@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-154-973-3088"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "10/25/1959"
+            }
+        ]
+    },
+    "7": {
+        "text": "[REDACTED]\nData Scientist\n[REDACTED] | [REDACTED]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and various data visualization tools. Demonstrated ability to translate complex business problems into data-driven solutions. Delivered impactful insights",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Michael Duffy"
+            },
+            {
+                "category": "EMAIL",
+                "value": "michael.duffy6@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-670-200-8637"
+            }
+        ]
+    },
+    "8": {
+        "text": "[REDACTED NAME]\nData Scientist\n[REDACTED EMAIL]\n[REDACTED PHONE]\n\nAn accomplished Data Scientist with a robust background in data analysis, machine learning, and predictive modeling. Proficient in Python and R, with experience in implementing ML algorithms for predicting consumer behavior and optimizing business processes, particularly in the financial sector. Dedicated to leveraging data-driven",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "George Fletcher"
+            },
+            {
+                "category": "EMAIL",
+                "value": "george.fletcher67@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "547-955-9007"
+            }
+        ]
+    },
+    "9": {
+        "text": "[REDACTED:NAME]\nData Scientist\n\nBorn: [REDACTED:DATE/DOB] | Contact: [REDACTED:PHONE] | Email: [REDACTED:EMAIL]\n\nA results-driven Data Scientist with 3 years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and SQL. Demonstr",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jackie Jones"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "04/08/2006"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-452-716-6464"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jackie.jones56@gmail.com"
+            }
+        ]
+    },
+    "10": {
+        "text": "[NAME]\nData Scientist\nEmail: [EMAIL]\nPhone: [PHONE]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and statistical modeling. Proficient in programming languages such as Python and R. Demonstrated success in extracting meaningful insights from large datasets and utilizing machine learning algorithms to optimize business",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Tyler Hawkins"
+            },
+            {
+                "category": "EMAIL",
+                "value": "tyler.hawkins@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-013-905-6188"
+            }
+        ]
+    },
+    "11": {
+        "text": "Remove PII from this resume: [REDACTED NAME]\n[REDACTED EMAIL] | [REDACTED PHONE]\nData Scientist | Data Analysis | Machine Learning | Python | R\n\nResults-driven Data Scientist with over 25 years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python and R, demonstrated expertise in extracting insights from large datasets, using statistical analysis, and implementing predictive models.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kayla Bell"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kayla.bell@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "600-373-2736"
+            }
+        ]
+    },
+    "12": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\n\nExperienced Software Engineer with a strong background in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in developing and maintaining high-quality software solutions. Leveraged extensive experience in software development to deliver projects on time and within budget,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Shlomo Zilberstein"
+            },
+            {
+                "category": "EMAIL",
+                "value": "shlomo@cs.umass.edu"
+            },
+            {
+                "category": "PHONE",
+                "value": "(413) 545-4189"
+            }
+        ]
+    },
+    "13": {
+        "text": "[NAME]\nData Scientist\n[PHONE] | [[EMAIL]](mailto:[EMAIL])\n\nData-driven professional with 5+ years of experience in data analysis, machine learning, and statistical modeling in Python and R. Proven ability to work collaboratively with cross-functional teams to",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Victoria May"
+            },
+            {
+                "category": "PHONE",
+                "value": "(940)977-8235"
+            },
+            {
+                "category": "EMAIL",
+                "value": "victoria.may88@yahoo.com"
+            }
+        ]
+    },
+    "14": {
+        "text": "[REDACTED]\n[REDACTED]  |  [REDACTED]\n\nData Scientist with 7 years of experience in data analysis and machine learning using Python and R. Adept at data mining, predictive modeling, and statistical analysis. Proven ability to transform data into insights, leading to informed business decisions. Previously worked as a Data Scientist at XYZ Corp",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jonathan Montgomery"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jonathan.montgomery@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(389) 976-8092"
+            }
+        ]
+    },
+    "15": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\nData Scientist | M.Sc. in Mathematics & Statistics\nDedicated Data Scientist with over 10 years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and ML libraries such as scikit-learn and TensorFlow. Notably",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Amanda Cochran"
+            },
+            {
+                "category": "EMAIL",
+                "value": "amanda.cochran44@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-678-582-0916"
+            }
+        ]
+    },
+    "16": {
+        "text": "[NAME]\n\nExperienced Data Scientist with a strong background in statistical analysis, machine learning, and data mining. Proficient in using Python, R, and SQL for data analysis. Offering over 5 years of experience in data-driven projects, including predictive modeling, data visualization, and statistical analysis of large datasets. Achieved significant improvements in business operations and customer satisfaction through data-driven insights. References and work samples available upon request.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Barbara Thomas"
+            }
+        ]
+    },
+    "17": {
+        "text": "[REDACTED] | [REDACTED] | [REDACTED]\nData Scientist with proficiency in data analysis, machine learning, and statistical modeling. Demonstrated expertise in programming languages such as Python and R.\n\nPreviously, I served as a Data Scientist at XYZ Inc. ([REDACTED]), where I leveraged machine learning algorithms",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Thomas Clark"
+            },
+            {
+                "category": "EMAIL",
+                "value": "thomas.clark@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-560-149-2958"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "2021-Present"
+            }
+        ]
+    },
+    "18": {
+        "text": "Remove PII from this resume: [REDACTED]\n[REDACTED] | [REDACTED]\nData Scientist\n\nResults-driven Data Scientist with a background in applied statistics, machine learning, and data analysis. Demonstrated expertise in Python, R, and SQL in various data-intensive projects. Recently, leveraged Python to develop machine learning algorithms and R to analyze large datasets in my role as a",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Nathan Moyer"
+            },
+            {
+                "category": "EMAIL",
+                "value": "nathan.moyer@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "248.283.5730"
+            }
+        ]
+    },
+    "19": {
+        "text": "[REDACTED NAME]\nData Scientist\nEmail: [REDACTED EMAIL]\nPhone: [REDACTED PHONE]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and statistical modeling. Skilled in programming languages like Python and R, with a proven track record of creating data-driven solutions. Previously honed my skills at [Company Name, Position, Dates (",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Bonnie Friedman"
+            },
+            {
+                "category": "EMAIL",
+                "value": "bonnie.friedman@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "096.326.9683"
+            }
+        ]
+    },
+    "20": {
+        "text": "[NAME]\nData Scientist\n[PHONE] | [[EMAIL]](mailto:[EMAIL])\n\nData-driven professional with 5+ years of experience in data analysis, machine learning, and statistical modeling in Python and R. Proven ability to work collaboratively with cross-functional teams to",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "James Allen"
+            },
+            {
+                "category": "PHONE",
+                "value": "(413) 545-3240"
+            },
+            {
+                "category": "EMAIL",
+                "value": "allan@cs.umass.edu"
+            }
+        ]
+    },
+    "21": {
+        "text": "[NAME] | [EMAIL] | [PHONE] | LinkedIn:linkedin.com/in/[NAME]\n\nExperienced Data Scientist with a passion for transforming raw data into actionable insights. Proficient in Python, R, and Machine Learning techniques. Offering 16 years of experience in data analysis, prediction, and modeling to drive project success in",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Brian Reyes"
+            },
+            {
+                "category": "EMAIL",
+                "value": "brian.reyes@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "587-169-6365"
+            },
+            {
+                "category": "NAME",
+                "value": "brianreyes"
+            }
+        ]
+    },
+    "22": {
+        "text": "Remove PII from this resume: [REDACTED]\n[REDACTED]\n[REDACTED]\n[REDACTED]\n\nData Scientist with six years of experience in leveraging Python, R, and machine learning to uncover actionable insights from large and complex data sets. Skilled in data analysis, statistical modeling, and data visualization. Previously, I contributed to predict",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Yair Zick"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "22.11.1985"
+            },
+            {
+                "category": "EMAIL",
+                "value": "yzick@cs.umass.edu"
+            },
+            {
+                "category": "PHONE",
+                "value": "(413) 545-6710"
+            }
+        ]
+    },
+    "23": {
+        "text": "[NAME]\nData Scientist\n[[EMAIL], [PHONE]]\n\nResults-driven Data Scientist with 15+ years of experience in data analysis, machine learning, and predictive modeling. Proficient in employing Python, R, and Machine Learning techniques to derive actionable insights from large, complex datasets.\n\nRelevant Work Experience:",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kimberly Smith"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kimberly.smith@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(185) 521-8175"
+            }
+        ]
+    },
+    "24": {
+        "text": "[NAME]\nEmail: [EMAIL] | Phone: [PHONE]\nDate of Birth: [DATE/DOB]\n\nData Science Professional with a strong background in data analysis, machine learning, and statistical modeling. Skilled in using Python, R, and various machine learning algorithms to drive data-driven decision making. Demonstr",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Melvin Rodriguez"
+            },
+            {
+                "category": "EMAIL",
+                "value": "melvin.rodriguez@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "748-736-0020"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "18 June 1971"
+            }
+        ]
+    },
+    "25": {
+        "text": " [NAME]\nData Scientist | [EMAIL] | [PHONE]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and predictive modeling. Skilled in Python, R, and SQL, with proficiency in various machine learning algorithms. Proven ability to leverage data-driven insights to drive business improvement.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Suzanne Singleton"
+            },
+            {
+                "category": "EMAIL",
+                "value": "suzanne.singleton98@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(399)661-9701"
+            }
+        ]
+    },
+    "26": {
+        "text": "[NAME]\nData Scientist\n[EMAIL] - [PHONE]\n\nData-driven professional with over 15 years of experience in data science, specializing in data analysis, machine learning, and statistical modeling. Proficient in Python and R programming, with a strong background in applying data-driven insights to improve business outcomes.\n\nPrevious work experience:\n\n* Data Scientist",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Elizabeth Miller"
+            },
+            {
+                "category": "EMAIL",
+                "value": "elizabeth.miller@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "9002181523"
+            }
+        ]
+    },
+    "27": {
+        "text": "[NAME] MD\nData Scientist\nEmail: [EMAIL]\nPhone: [PHONE]\nBorn: [DATE]\n\nExperienced Data Scientist with a strong background in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kimberly Marquez"
+            },
+            {
+                "category": "EMAIL",
+                "value": "miss.kimberly.marquez.md@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-416-462-6460"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "November 14, 1975"
+            }
+        ]
+    },
+    "28": {
+        "text": "[REDACTED]\n[REDACTED] | [REDACTED] | [REDACTED]\n\nData Scientist with over 10 years of experience in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and SQL, with a strong background in data mining, predictive analytics, and big data processing. Adept at developing",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Joanne Glover"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "22-02-1973"
+            },
+            {
+                "category": "EMAIL",
+                "value": "joanne.glover@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "595.858.4789"
+            }
+        ]
+    },
+    "29": {
+        "text": "[REDACTED]\nData Scientist\nEmail: [REDACTED]\nPhone: [REDACTED]\n\nA highly skilled Data Scientist with a strong background in data analysis, machine learning, and statistical modeling. Proficient in Python and R, with a proven track record of delivering high-quality data-driven insights that drive business growth. Skilled in using various machine learning algorithms to develop",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Amanda Powers"
+            },
+            {
+                "category": "EMAIL",
+                "value": "amanda.powers88@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(957)505-9024"
+            }
+        ]
+    },
+    "30": {
+        "text": "[NAME]\n[DATE/DOB]\n[EMAIL]\n[PHONE]\n\nData Scientist with six years of experience in leveraging Python, R, and machine learning to uncover actionable insights from large and complex data sets. Skilled in data analysis, statistical modeling, and data visualization. Previously, I contributed to predict",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Alvin Roberts"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "22.11.1985"
+            },
+            {
+                "category": "EMAIL",
+                "value": "alvin.roberts40@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-010-494-7887"
+            }
+        ]
+    },
+    "31": {
+        "text": "[REDACTED NAME]\nData Scientist\nEmail: [REDACTED EMAIL] | Tel: [REDACTED PHONE]\n\nExperienced Data Scientist proficient in data analysis, machine learning, and predictive modeling. Skilled in programming languages such as Python and R. Demonstrated experience in developing and implementing machine learning algorithms, data visualization, and statistical modeling.\n\n*",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Robert Davila"
+            },
+            {
+                "category": "EMAIL",
+                "value": "robert.davila32@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "562.208.8977"
+            }
+        ]
+    },
+    "32": {
+        "text": "Remove PII from this resume: [NAME]\nData Scientist | [EMAIL] | [PHONE]\n\nA highly skilled and results-driven Data Scientist with over 10 years of experience in data analysis, machine learning, and artificial intelligence. Proficient in Python, R, SQL, and other data science tools. Leveraging my strong analytical skills, I have consistently delivered insights, optimized business processes,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Heather Craig"
+            },
+            {
+                "category": "EMAIL",
+                "value": "heather.craig@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "179-460-2288"
+            }
+        ]
+    },
+    "33": {
+        "text": "Remove PII from this resume: **[REDACTED]**\nData Scientist | [REDACTED] | [REDACTED] | LinkedIn: [linkedin.com/in/[REDACTED]](http://linkedin.com/in/[REDACTED])\n\nData-driven professional with 5+ years of experience in data analysis and machine learning, adept at transforming raw data",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jonathan Dawson"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jonathan.dawson@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "392.573.5270"
+            },
+            {
+                "category": "NAME",
+                "value": "jonathandawson"
+            }
+        ]
+    },
+    "34": {
+        "text": "**[NAME]**\nData Scientist | [EMAIL] | [PHONE]\n\nSkilled Data Scientist with over 10 years of experience in data analysis, machine learning, and statistical modeling. Proficient in Python and R for data manipulation, statistical analysis, and machine learning algorithms. Proven ability to translate complex data into actionable insights to drive business",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jonathan Brown"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jonathan.brown@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "266.525.5471"
+            }
+        ]
+    },
+    "35": {
+        "text": "[NAME]\n[DATE/DOB] | [EMAIL] | [PHONE]\n\nData Scientist with a solid background in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and other data manipulation tools, adept at handling large datasets, and transforming raw data into actionable insights. Demonstr",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Anthony Powell"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "21 September 1998"
+            },
+            {
+                "category": "EMAIL",
+                "value": "anthony.powell80@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-292-331-582"
+            }
+        ]
+    },
+    "36": {
+        "text": "Data Scientist with [6+ years] of experience in data analysis and machine learning. Proficient in coding with Python, R, and ML libraries for modeling and visualization. Demonstrated ability to leverage data to solve complex business problems and drive actionable insights.\n\nContact Information:\n- Phone: [REDACTED]\n- Name: [REDACTED]\n- Email: [REDACTED]",
+        "entities": [
+            {
+                "category": "PHONE",
+                "value": "144-520-7447"
+            },
+            {
+                "category": "NAME",
+                "value": "Emily Brown"
+            },
+            {
+                "category": "EMAIL",
+                "value": "emily.brown@yahoo.com"
+            }
+        ]
+    },
+    "37": {
+        "text": "[REDACTED]\n[REDACTED] | Email: [REDACTED] | Tel: [REDACTED]\n\nData Scientist with 10+ years of experience in data analysis, machine learning, and predictive modeling using Python, R, and SQL. Proven ability to manage large datasets, develop predictive algorithms, and communicate findings to stakeholders",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jeff Craig"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "Dec 03 1973"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jeff.craig@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-663-601-7101"
+            }
+        ]
+    },
+    "38": {
+        "text": "[NAME], M.Sc., Data Scientist ([DATE/DOB]) | [PHONE] | [[EMAIL]](mailto:[EMAIL])\n\nVersatile Data Scientist with a Master's degree in Data Science, proficient in utilizing Python, R, and Machine Learning algorithms",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Dylan Foley"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "1996/10/15"
+            },
+            {
+                "category": "PHONE",
+                "value": "557-596-3225"
+            },
+            {
+                "category": "EMAIL",
+                "value": "dylan.foley@outlook.com"
+            }
+        ]
+    },
+    "39": {
+        "text": "Remove PII from this resume: [NAME]\n[DATE/DOB] | [EMAIL] | [PHONE]\n\nData Scientist with a keen interest in leveraging data analysis, machine learning, and statistical modeling to drive business growth. Proficient in Python, R, and SQL, with over four years of hands-on experience in data-driven project execution. Demonstr",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Casey Perez"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "12.10.2006"
+            },
+            {
+                "category": "EMAIL",
+                "value": "casey.perez48@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "941.816.5902"
+            }
+        ]
+    },
+    "40": {
+        "text": "[NAME]\nData Scientist\nEmail: [EMAIL]\nPhone: [PHONE]\n\nA highly skilled Data Scientist with over 5 years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and various machine learning techniques. Demonstrated ability to turn raw data into actionable insights that drive strategic",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jennifer Reed"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jennifer.reed@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-734-465-6257"
+            }
+        ]
+    },
+    "41": {
+        "text": "Remove PII from this resume: [REDACTED]\ndanielle.waller@hotmail.com\n(485)283-0257\nDOB: 01/18/1969\n\nSeasoned Data Scientist with 10+ years of experience in leveraging data analysis and machine learning techniques to optimize business operations. Proficient in Python, R, and SAS, with a strong background in data mining, modeling, and visual",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Danielle Waller"
+            },
+            {
+                "category": "EMAIL",
+                "value": "danielle.waller@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(485)283-0257"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "01/18/1969"
+            }
+        ]
+    },
+    "42": {
+        "text": "[NAME]\n[EMAIL] | [PHONE]\n[DATE]\n\nAccomplished Data Scientist with over 10 years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and SQL. Leveraged data-driven insights to optimize business processes in previous roles",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Randy Jenkins"
+            },
+            {
+                "category": "EMAIL",
+                "value": "randy.jenkins22@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-696-377-4188"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "05/05/1969"
+            }
+        ]
+    },
+    "43": {
+        "text": "[NAME]\n[PHONE]\n[[EMAIL]](mailto:[EMAIL])\n\nData Scientist with 15+ years of experience in data analysis, machine learning, and statistical modeling using Python, R, and SQL. Proficient in implementing machine learning algorithms for predictive modeling, and data visualization using libraries such as Scikit-",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Grant James"
+            },
+            {
+                "category": "PHONE",
+                "value": "592.858.4051"
+            },
+            {
+                "category": "EMAIL",
+                "value": "grant.james@hotmail.com"
+            }
+        ]
+    },
+    "44": {
+        "text": "---\n\n**Data Scientist - [REDACTED]**\n*Email: [REDACTED], Phone: [REDACTED]*\n\n Experienced Data Scientist with a passion for leveraging advanced analytical techniques to drive business growth. Skilled in data analysis, machine learning, and utilizing tools such as Python, R, and MATLAB. Demonstrated ability to manage data-driven",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Daniel Walker"
+            },
+            {
+                "category": "EMAIL",
+                "value": "daniel.walker@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "277.478.1554"
+            }
+        ]
+    },
+    "45": {
+        "text": "[REDACTED NAME]\nData Scientist\nEmail: [REDACTED EMAIL] | Phone: [REDACTED PHONE]\n\nHighly skilled Data Scientist with 15+ years of experience in data analysis, machine learning, and predictive modeling. Proficient in Python, R, and SQL. Leveraging strong statistical acumen to drive business insights and optimize performance. Previously worked as",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Barbara Bailey"
+            },
+            {
+                "category": "EMAIL",
+                "value": "barbara.bailey@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "232-271-3036"
+            }
+        ]
+    },
+    "46": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE] | [DATE]\n\nExperienced Data Scientist proficient in data analysis, machine learning, and programming languages like Python and R. Offering over 5 years of experience in driving data-driven insights and implementing ML solutions in diverse industries. Demonstrated ability to translate business",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Scott Wilkinson"
+            },
+            {
+                "category": "EMAIL",
+                "value": "scott.wilkinson@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "694-715-2864"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "1980-11-13"
+            }
+        ]
+    },
+    "47": {
+        "text": "Remove PII from this resume: [REDACTED NAME]\n[REDACTED EMAIL] | [REDACTED PHONE]\n[REDACTED DATE]\n\nData Scientist proficient in data analysis, machine learning, and predictive modeling. Demonstrated expertise in programming languages such as Python and R. Leveraging robust statistical acumen to manage and interpret large data sets. Previously served as",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Tanya Patel"
+            },
+            {
+                "category": "EMAIL",
+                "value": "tanya.patel46@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-253-087-9608"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "February 08, 1971"
+            }
+        ]
+    },
+    "48": {
+        "text": "[NAME]\n[EMAIL] | [PHONE]\n\nData Scientist with 55+ years of experience in data analysis, machine learning, and statistical modeling. Proficient in Python, R, and various machine learning algorithms. Demonstrated success in extracting insights from large datasets to make informed business decisions. Previously worked as a Data",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Gwendolyn Figueroa"
+            },
+            {
+                "category": "EMAIL",
+                "value": "gwendolyn.figueroa@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "544.906.2055"
+            }
+        ]
+    },
+    "49": {
+        "text": "Remove PII from this resume: [REDACTED]\nSoftware Engineer\n\nBorn on [REDACTED] | Contact: [REDACTED] | Email: [REDACTED]\n\nSeasoned Software Engineer with 7+ years of experience in software development. Proficient in Python, Java, and React. Proven expertise in designing scalable and user",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Keith Montes"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "06/10/1990"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-996-282-1506x1039"
+            },
+            {
+                "category": "EMAIL",
+                "value": "keith.montes@gmail.com"
+            }
+        ]
+    },
+    "50": {
+        "text": "[NAME]\nSoftware Engineer\nEmail: [EMAIL]\nPhone: [PHONE]\n\nA dedicated and analytical Software Engineer with a Bachelor's degree in Computer Science. Proficient in programming languages such as Python, Java, and React. Boasts 5+ years of experience in software development, including a 3-year tenure at",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Alexandra Zuniga"
+            },
+            {
+                "category": "EMAIL",
+                "value": "alexandra.zuniga40@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "596.206.2100"
+            }
+        ]
+    },
+    "51": {
+        "text": "Remove PII from this resume: [REDACTED NAME]\n[REDACTED EMAIL] | [REDACTED PHONE]\nDOB: [REDACTED DOB]\n\nExperienced Software Engineer with a demonstrated history of working in the information technology and services industry. Skilled in programming languages such as Python, Java, and React. Proven expertise in software development, specifically in backend development, with",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Tanya Whitney"
+            },
+            {
+                "category": "EMAIL",
+                "value": "tanya.whitney@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-045-017-1515"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "17-06-1982"
+            }
+        ]
+    },
+    "52": {
+        "text": "[REDACTED]\nSoftware Engineer\nEmail: [REDACTED]\nPhone: [REDACTED]\nDate of Birth: [REDACTED]\n\nSkilled Software Engineer with over 20 years of experience in programming and software development. Proven expertise in Python, Java, and React. Delivered scalable and high-performance software solutions in",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Grant Simmons"
+            },
+            {
+                "category": "EMAIL",
+                "value": "grant.simmons@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-435-357-5676"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "14 February 1966"
+            }
+        ]
+    },
+    "53": {
+        "text": "[NAME], B.Sc. in Computer Science, born on [DATE]. Skilled Software Engineer with 15+ years of experience in programming languages such as Python, Java, and React. Demonstrated expertise in full-stack software development, with a focus on delivering scalable, high-performing applications.\n\nNotable achievements include:\n- Developed and implemented a Python-based data analysis",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Stacey Martinez"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "Aug 28, 1973"
+            }
+        ]
+    },
+    "54": {
+        "text": "Remove PII from this resume: [REDACTED: NAME]\n\n[REDACTED: EMAIL] | [REDACTED: PHONE] | [REDACTED: DATE/DOB]\n\nExperienced Software Engineer with a strong background in programming and software development. Proficient in Python, Java, and React, with a proven track record in delivering high-quality, scalable software solutions. Demonstrated ability to design, develop, and",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Luis Clayton"
+            },
+            {
+                "category": "EMAIL",
+                "value": "luis.clayton80@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "253.997.0229"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "27 December 1981"
+            }
+        ]
+    },
+    "55": {
+        "text": "[REDACTED]\n[REDACTED] | [REDACTED]\n[REDACTED]\n\nDedicated and innovative Software Engineer with over five years of experience in software development, specializing in Python, Java, and React. Proficient in object-oriented programming, design patterns, and agile methodologies. Demonstrated success",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Yvonne Walker"
+            },
+            {
+                "category": "EMAIL",
+                "value": "yvonne.walker50@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-723-967-6496"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "22.04.1992"
+            }
+        ]
+    },
+    "56": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\nDOB: [DATE]\n\nSkilled Software Engineer with 8+ years of experience in designing, developing, and maintaining high-quality software applications using Python, Java, React, and other technologies. Proven ability to collaborate effectively with cross-functional teams to deliver scalable",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Rachel Brown"
+            },
+            {
+                "category": "EMAIL",
+                "value": "rachel.brown@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-230-121-9394"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "1984-09-11"
+            }
+        ]
+    },
+    "57": {
+        "text": "[NAME]\nSoftware Engineer\nEmail: [EMAIL] | Tel: [PHONE]\n\nVersatile Software Engineer with over 7 years of experience in designing and developing scalable, high-performance software applications using a wide array of programming languages. Proficient in Python, Java, and React. Demonstrated expertise in software development lifecycle and agile",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Matthew Scott"
+            },
+            {
+                "category": "EMAIL",
+                "value": "matthew.scott@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-513-134-5681"
+            }
+        ]
+    },
+    "58": {
+        "text": "[REDACTED NAME]\nEmail: [REDACTED EMAIL] | Phone: [REDACTED PHONE]\nBorn on [REDACTED DATE]\n\nExperienced Software Engineer proficient in Python, Java, and React. Demonstrated ability to design, implement, and maintain scalable software solutions. Adept at software development life cycle (SDLC), agile",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kathleen Morris"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kathleen.morris8@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "841-607-1419"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "July 12, 1986"
+            }
+        ]
+    },
+    "59": {
+        "text": "Remove PII from this resume: [NAME]\nSoftware Engineer\n[EMAIL] | [PHONE]\n\nExperienced Software Engineer with a strong background in developing high-quality software solutions. Skilled in programming languages including Python, Java, and React, with a focus on writing clean, efficient code that is easy to maintain.\n\nPreviously held positions at XYZ",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Ashlee Juarez"
+            },
+            {
+                "category": "EMAIL",
+                "value": "ashlee.juarez77@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-357-816-7824"
+            }
+        ]
+    },
+    "60": {
+        "text": "[REDACTED]\n[REDACTED]\n[REDACTED]\n[REDACTED]\n\nExperienced Software Engineer with a strong background in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in designing and developing scalable and user-friendly applications.\n\n* Software Engineer at X",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Sarah Dougherty"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "21 April 1977"
+            },
+            {
+                "category": "EMAIL",
+                "value": "sarah.dougherty77@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "858.008.7462"
+            }
+        ]
+    },
+    "61": {
+        "text": "[REDACTED]\nSoftware Engineer\nEmail: [REDACTED]\nPhone: [REDACTED]\n\nSkilled Software Engineer with a strong programming and software development background, adept at Python, Java, and React. Proven expertise in designing, implementing, and maintaining scalable software solutions in fast-paced Agile environments. Leveraged extensive technical knowledge to optimize",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "George Weaver"
+            },
+            {
+                "category": "EMAIL",
+                "value": "george.weaver@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-826-016-0316"
+            }
+        ]
+    },
+    "62": {
+        "text": "Remove PII from this resume: [REDACTED]\n[REDACTED]\n[REDACTED] | [REDACTED]\n\nSoftware Engineer with over 30 years of experience in the IT industry. Proficient in programming languages such as Python, Java, and React. Demonstrated expertise in software development, architecture design, and project management.\n\nPrevious Employment:\n- Senior Software Engineer at XYZ Corporation (",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kathryn Thomas"
+            },
+            {
+                "category": "NAME",
+                "value": "Kathryn Thomas"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kathryn.thomas@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(992)167-9266"
+            }
+        ]
+    },
+    "63": {
+        "text": "[REDACTED]\n[REDACTED] | [REDACTED]\n\nSkilled Software Engineer with over 20 years of experience in software development and programming proficient in Python, Java, and React. Proven track record in creating scalable, user-friendly applications and solutions.\n\nWork Experience:\n- Software Engineer at XYZ Company (2016 - Present)",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kyle Lyons"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kyle.lyons@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "268.363.7120"
+            }
+        ]
+    },
+    "64": {
+        "text": "[REDACTED_NAME]\nSoftware Engineer\nEmail: [REDACTED_EMAIL] | Phone: [REDACTED_PHONE]\n\nSkilled Software Engineer with over 10 years of experience in software development, specializing in Python, Java, and React. Committed to designing scalable, efficient, and user-friendly products. Demonstrated ability to write clean, well-structured code,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Ashley Ross"
+            },
+            {
+                "category": "EMAIL",
+                "value": "ashley.ross85@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "874.963.3841"
+            }
+        ]
+    },
+    "65": {
+        "text": "[REDACTED]\nSoftware Engineer\nEmail: [REDACTED]\nPhone: [REDACTED]\n\nSkilled Software Engineer with over 15 years of experience in software development and programming languages such as Python, Java, and React. Proven abilities in designing, coding, and debugging software applications. Proficient in agile methodologies and object-oriented programming.\n\nWork Experience",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Allison Brown"
+            },
+            {
+                "category": "EMAIL",
+                "value": "allison.brown@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "667-964-3606"
+            }
+        ]
+    },
+    "66": {
+        "text": "Remove PII from this resume: [REDACTED]\nSoftware Engineer\n\nA seasoned Software Engineer with over 15 years of experience in the tech industry. Proficient in Python, Java, and React. Currently, I am developing robust, scalable, and user-friendly web applications for XYZ Corporation (2018-Present). Prior to that, I worked at ABC Tech for 6 years, where I honed my skills in software development, delivering high-quality solutions",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Edward Henson"
+            }
+        ]
+    },
+    "67": {
+        "text": "[REDACTED]\nSoftware Engineer\n[REDACTED] | [REDACTED]\n\nSkilled Software Engineer with over 10 years of experience in designing, developing, and maintaining software applications using Python, Java, and React. Proficient in building scalable, high-performance, and secure systems. Adept at integrating front-end technologies into back-end systems to",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Paul Washington"
+            },
+            {
+                "category": "EMAIL",
+                "value": "paul.washington@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "139.739.2772"
+            }
+        ]
+    },
+    "68": {
+        "text": "[REDACTED]\nSoftware Engineer\nEmail: [REDACTED]\nPhone No: [REDACTED]\nDoB: [REDACTED]\n\nExperienced Software Engineer with a strong background in programming and software development. Specialized in technologies like Python, Java, and React. Proven ability to design, code, and debug software",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Deborah Lewis"
+            },
+            {
+                "category": "EMAIL",
+                "value": "deborah.lewis@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "838-912-7478"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "31-01-1983"
+            }
+        ]
+    },
+    "69": {
+        "text": "[NAME]\nSoftware Engineer\n[DATE/DOB]\n[EMAIL]\n[PHONE]\n\nSkilled software engineer with over 10 years of experience in programming languages such as Python, Java, and React. Proficient in software development life cycle (SDLC), Agile methodologies, and delivering high-quality, scalable solutions. Adept at",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Monica Craig"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "29 December 1961"
+            },
+            {
+                "category": "EMAIL",
+                "value": "monica.craig@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "998-224-7369"
+            }
+        ]
+    },
+    "70": {
+        "text": "Remove PII from this resume: [NAME]\nSoftware Engineer\nEmail: [EMAIL] | Phone: [PHONE]\n\nA dedicated Software Engineer with over a decade of experience in programming languages such as Python and Java. Proficient in React, with a strong background in software development. Most recently, I developed and maintained high-quality software applications at XYZ Corporation ([DATE]-",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Lori Miranda"
+            },
+            {
+                "category": "EMAIL",
+                "value": "lori.miranda27@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(219)271-1052"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "2018"
+            }
+        ]
+    },
+    "71": {
+        "text": "[MASK]\n[MASK] | [MASK]\n[MASK]\n\nSoftware Engineer with 5 years of experience in software development, specializing in Python, Java, and React. Proven ability to design and implement scalable, high-performing applications. Committed to following best practices and keeping up",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Robert Jones"
+            },
+            {
+                "category": "EMAIL",
+                "value": "robert.jones65@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-860-525-0665"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "April 17, 1999"
+            }
+        ]
+    },
+    "72": {
+        "text": "[NAME]\nSoftware Engineer\n[EMAIL] | [PHONE]\n\nExperienced Software Engineer with a strong background in software development, focusing on Python, Java, and React. Proven ability to produce clean, efficient, and well-documented code. Demonstrated success in designing scalable solutions for complex systems.\n\nPrevious Experience:\n* Senior Software",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Donna Solis"
+            },
+            {
+                "category": "EMAIL",
+                "value": "donna.solis@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "769-871-2230"
+            }
+        ]
+    },
+    "73": {
+        "text": "[NAME]\n[EMAIL] | [PHONE]\n\nSkilled Software Engineer with over 5 years of experience in software development, programming, and system analysis. Proficient in Python, Java, and React for front-end development. Demonstrated ability to design, develop, and implement software solutions, while maintaining high-quality standards and meeting project deadlines.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Nancy Santos"
+            },
+            {
+                "category": "EMAIL",
+                "value": "nancy.santos82@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "414-082-1347"
+            }
+        ]
+    },
+    "74": {
+        "text": "[NAME] | [EMAIL] | [PHONE] | [DATE/DOB]\n\nSkilled Software Engineer with over 15 years of experience in developing and designing software solutions using Python, Java, and React. Demonstrated expertise in optimizing software performance by writing efficient, testable, and reusable code.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Richard Griffith"
+            },
+            {
+                "category": "EMAIL",
+                "value": "richard.griffith65@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(881)409-7932"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "31 July 1966"
+            }
+        ]
+    },
+    "75": {
+        "text": "[REDACTED]\nSoftware Engineer\nEmail: [REDACTED]\nPhone: [REDACTED]\n\nHighly skilled and experienced Software Engineer with over a decade of expertise in software development, programming, and proficient in multiple technologies. Proven track record in engineering complex software solutions using Python, Java, React. Previously developed and maintained applications for XYZ Corporation (",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Julian Bradford"
+            },
+            {
+                "category": "EMAIL",
+                "value": "julian.bradford@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-578-553-8949"
+            }
+        ]
+    },
+    "76": {
+        "text": "[NAME]\n[EMAIL] | [PHONE]\n[DATE/DOB]\n\nExperienced Software Engineer with a strong background in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in developing and maintaining high-quality software solutions. Leveraged extensive experience in software development to deliver projects on time and within budget,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Tim Dickerson"
+            },
+            {
+                "category": "EMAIL",
+                "value": "tim.dickerson@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(400)819-9715"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "27.11.1961"
+            }
+        ]
+    },
+    "77": {
+        "text": "[NAME]\n[PHONE] | [EMAIL]\nDOB: [DATE]\n\nSkilled Software Engineer with over 15 years of experience in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in creating scalable, user-friendly applications. Offering a strong problem-solving",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Luis Martinez"
+            },
+            {
+                "category": "PHONE",
+                "value": "(083)887-4593"
+            },
+            {
+                "category": "EMAIL",
+                "value": "luis.martinez@icloud.com"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "24 March 1967"
+            }
+        ]
+    },
+    "78": {
+        "text": "[REDACTED NAME]\nSoftware Engineer | [REDACTED EMAIL] | [REDACTED PHONE]\n\nExperienced Software Engineer with over 10 years of experience in software development and programming. Skilled in Python, Java, and React. Proficient in software engineering, algorithm design, data structures, and test-driven development. Previously, I contributed to",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Tammy Cox"
+            },
+            {
+                "category": "EMAIL",
+                "value": "tammy.cox56@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(001) 829-451-8194"
+            }
+        ]
+    },
+    "79": {
+        "text": "[REDACTED_NAME] MD\nSoftware Engineer | Email: [REDACTED_EMAIL] | Tel: [REDACTED_PHONE]\n\nExperienced Software Engineer with over 30 years of experience in software development and programming. Proficient in Python, Java, and React. Demonstrated aptitude in designing and implementing complex software systems.\n\nNotable Achievements",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Robert Hanson"
+            },
+            {
+                "category": "EMAIL",
+                "value": "robert.hanson.md31@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "511.251.7859"
+            }
+        ]
+    },
+    "80": {
+        "text": "---\n\n<NAME> [<EMAIL>, <PHONE>] | <DATE>\n\nVersatile Software Engineer with 5+ years of experience in Python, Java, and React. Proven ability to develop, test, and maintain high-quality software applications. Strong problem-solving skills,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Samantha Haley"
+            },
+            {
+                "category": "EMAIL",
+                "value": "samantha.haley96@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-271-293-2523"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "19-11-1992"
+            }
+        ]
+    },
+    "81": {
+        "text": "[REDACTED NAME]\nEmail: [REDACTED EMAIL]\nPhone: [REDACTED PHONE]\n\nSoftware Engineer with 4+ years of experience in the development of complex, scalable applications. Proficient in Python, Java, and React. Delivered robust, error-free solutions, optimized for performance, in the context of diverse projects, ensuring user-friendly interfaces and smooth workfl",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Michelle Fox"
+            },
+            {
+                "category": "EMAIL",
+                "value": "michelle.fox@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(759)463-7775"
+            }
+        ]
+    },
+    "82": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\n\nExperienced Software Engineer with a strong background in developing robust applications using Python, Java, and React. Leveraging over a decade of experience, I design scalable and user-friendly software solutions that drive process efficiency and productivity. Proven ability to work in Agile/Scrum environments, collabor",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Jenny Mcdowell"
+            },
+            {
+                "category": "EMAIL",
+                "value": "jenny.mcdowell@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "437.264.9503"
+            }
+        ]
+    },
+    "83": {
+        "text": "Remove PII from this resume: [REDACTED_NAME]\n[REDACTED_EMAIL] | [REDACTED_PHONE]\n\nSkilled Software Engineer with a proven track record in programming and software development. Proficient in Python, Java, and React. Delivered high-quality, scalable, and user-friendly applications at XYZ Corporation (2018-2020) and ABC Company (20",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Brenda Ramos"
+            },
+            {
+                "category": "EMAIL",
+                "value": "brenda.ramos@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-064-093-0827"
+            }
+        ]
+    },
+    "84": {
+        "text": "[REDACTED]\nSoftware Engineer\n[REDACTED] | [REDACTED] | [REDACTED]\n\nExperienced Software Engineer with over a decade of experience in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in designing, developing, and maintaining scalable and high-performance",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Brenda Ellis"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "19 July 1960"
+            },
+            {
+                "category": "EMAIL",
+                "value": "brenda.ellis@hotmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "001-643-757-2666"
+            }
+        ]
+    },
+    "85": {
+        "text": "Remove PII from this resume: ---\n\nSoftware Engineer [REDACTED], born on [REDACTED], offers extensive experience in Python, Java, and React. Dedicated to delivering high-quality software solutions, I have honed my skills in object-oriented programming and software development across various projects.\n\nRecent Experience:\n- Software Engineer at XYZ Corp, June 2018-Present\n- Software Engineer at ABC Inc,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Stephen Walker"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "September 29, 1988"
+            }
+        ]
+    },
+    "86": {
+        "text": "Remove PII from this resume: [REDACTED_NAME]\nSoftware Engineer | [REDACTED_DATE] | [REDACTED_EMAIL] | [REDACTED_PHONE]\n\nExperienced Software Engineer proficient in Python, Java, and React. Offering over 5 years of experience in software development and programming, most recently at XYZ Corporation (2018-2020). Lever",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Katie Torres"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "12/28/1964"
+            },
+            {
+                "category": "EMAIL",
+                "value": "katie.torres@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "951-527-4307"
+            }
+        ]
+    },
+    "87": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\n\nExperienced Software Engineer with a strong background in developing high-quality, scalable, and maintainable software solutions. Proficient in programming languages such as Python, Java, and React. With over 5 years of experience, I have successfully developed and deployed applications, managing complete software development lifec",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Shannon Fitzgerald"
+            },
+            {
+                "category": "EMAIL",
+                "value": "shannon.fitzgerald36@gmail.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "+1-478-302-3320"
+            }
+        ]
+    },
+    "88": {
+        "text": "[REDACTED]\nEmail: [REDACTED]\nPhone: [REDACTED]\nDate of Birth: [REDACTED]\n\nSkilled Software Engineer with over 10 years of experience in programming and software development. Proficient in Python, Java, and React. Demonstrated expertise in full-stack development, design, and maintenance of scal",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "James Sullivan"
+            },
+            {
+                "category": "EMAIL",
+                "value": "james.sullivan@yahoo.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(253)428-8559"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "1980/05/26"
+            }
+        ]
+    },
+    "89": {
+        "text": "Remove PII from this resume: [NAME]\nEmail: [EMAIL]\nTel: [PHONE]\n\nSoftware Engineer with 2+ years of experience in software development and programming, proficient in Python, Java, and React. Delivered high-quality code and collaborated with cross-functional teams on projects like \"Project X\" (Java, 2021-2022)",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Sara Ross"
+            },
+            {
+                "category": "EMAIL",
+                "value": "sara.ross@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(675)776-5842"
+            }
+        ]
+    },
+    "90": {
+        "text": "[REDACTED NAME]\nSoftware Engineer\n\n- Dedicated and accomplished Software Engineer with over 7 years of experience in programming, software development, and problem-solving. Proficient in Python, Java, and React technologies, with a proven ability to deliver high-quality and scalable solutions.\n\nPrevious Experience:\n- Software Engineer, XYZ Tech ([REDACTED DATE])\n- Software Developer, ABC Inc.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Crystal Martinez"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "2018 - present"
+            }
+        ]
+    },
+    "91": {
+        "text": "[NAME] | [EMAIL] | [PHONE]\nSoftware Engineer with over 15 years of experience in software development. Proficient in Python, Java, and React. Demonstrated expertise in designing scalable and high-performing web applications. Previously, I led the development of a real-time data analytics platform using Python and React, resulting",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Michael Lopez"
+            },
+            {
+                "category": "EMAIL",
+                "value": "michael.lopez@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "162.888.8746"
+            }
+        ]
+    },
+    "92": {
+        "text": "[NAME]\n[[PHONE] | [EMAIL]]\n\nSeasoned Software Engineer with over 20 years of experience in developing and designing software applications. Skilled in Python, Java, React, and other related technologies. Proven track record in managing complex projects and collaborating with cross-functional teams. Delivered high-quality, scalable, and maintainable",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Daniel Tate"
+            },
+            {
+                "category": "PHONE",
+                "value": "788-025-9433"
+            },
+            {
+                "category": "EMAIL",
+                "value": "daniel.tate@outlook.com"
+            }
+        ]
+    },
+    "93": {
+        "text": "Remove PII from this resume: [NAME REDACTED]\nSoftware Engineer\n[PHONE REDACTED] | [[EMAIL REDACTED]](mailto:[EMAIL REDACTED])\n\nExperienced Software Engineer with a strong background in developing scalable and high-performance systems. Proficient in programming languages such as Python, Java, and React. Skilled in object-oriented design,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Hannah Sullivan"
+            },
+            {
+                "category": "PHONE",
+                "value": "(344)591-7088"
+            },
+            {
+                "category": "EMAIL",
+                "value": "hannah.sullivan@gmail.com"
+            }
+        ]
+    },
+    "94": {
+        "text": "---\n\n**[NAME]** | [EMAIL] | [PHONE]\n\nSkilled Software Engineer with over 20 years of experience in programming and software development. Proficient in Python, Java, and React. Proven track record in designing and implementing scalable software solutions.\n\n**Professional Experience:**\n- Software Engineer at XYZ Corporation",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Patrick Griffin"
+            },
+            {
+                "category": "EMAIL",
+                "value": "patent.griffin@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "(801) 048-5809"
+            }
+        ]
+    },
+    "95": {
+        "text": "Remove PII from this resume: [NAME]\n[EMAIL] | [PHONE]\n[DATE/DOB]\n\nSkilled Software Engineer with a passion for creating innovative and scalable solutions. Proficient in Python, Java, React, and other programming languages. Bringing over 5 years of experience in software development from [Company Name, Dates] and [Company Name, Dates",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Kyle Fisher"
+            },
+            {
+                "category": "EMAIL",
+                "value": "kyle.fisher84@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "241-691-4414"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "Oct 26 1997"
+            }
+        ]
+    },
+    "96": {
+        "text": "Remove PII from this resume: [REDACTED]\nBorn on [REDACTED]\nEmail: [REDACTED](mailto:[REDACTED])\nPhone: [REDACTED]\n\nExperienced Marketing Professional with a strong background in SEO, social media, and campaign management. Proven skills in creative approach and effective communication strategies.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Samuel Villa"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "01.09.1971"
+            },
+            {
+                "category": "EMAIL",
+                "value": "samuel.villa57@outlook.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "9630448333"
+            }
+        ]
+    },
+    "97": {
+        "text": "---\n\n**[REDACTED NAME]**\nM: [REDACTED PHONE] | E: [REDACTED EMAIL]\n\nDynamic Marketing Professional with 10+ years of experience in SEO, Social Media, and Campaign Management. Proven ability to drive growth, improve brand visibility, and deliver results in fast-paced environments. Skilled in creative problem-",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Keith Mendoza MD"
+            },
+            {
+                "category": "PHONE",
+                "value": "(001) 201-186-8850"
+            },
+            {
+                "category": "EMAIL",
+                "value": "keith.mendoza.md@icloud.com"
+            }
+        ]
+    },
+    "98": {
+        "text": "Remove PII from this resume: [REDACTED]\n[REDACTED] | [REDACTED]\n\nSkilled Software Engineer with over 5 years of experience in software development, programming, and system analysis. Proficient in Python, Java, and React for front-end development. Demonstrated ability to design, develop, and implement software solutions, while maintaining high-quality standards and meeting project deadlines.",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Ramesh Sitaraman"
+            },
+            {
+                "category": "EMAIL",
+                "value": "ramesh.s@umass.edu"
+            },
+            {
+                "category": "PHONE",
+                "value": "414-888-1347"
+            }
+        ]
+    },
+    "99": {
+        "text": "[REDACTED_NAME]\nProfessor\nEmail: [REDACTED_EMAIL]\nPhone: [REDACTED_PHONE]\n\n Distinguished professor with over 15 years of experience in software development and programming languages such as Python, Java, and React. Proven abilities in designing, coding, and debugging software applications. Proficient in agile methodologies and object-oriented programming.\n\nWork Experience",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Bruno Castro D'Silva"
+            },
+            {
+                "category": "EMAIL",
+                "value": "bruno_dsilva@icloud.com"
+            },
+            {
+                "category": "PHONE",
+                "value": "478-964-3606"
+            }
+        ]
+    },
+    "100": {
+        "text": "Assistant Professor [NAME], born on [DATE], ([EMAIL]) offers extensive experience in Python, Java, and React. Dedicated to delivering high-quality software solutions, I have honed my skills in object-oriented programming and software development across various projects.\n\nRecent Experience:\n- Software Engineer at XYZ Corp, June 2018-Present\n- Software Engineer at ABC Inc,",
+        "entities": [
+            {
+                "category": "NAME",
+                "value": "Hedyeh Beyhaghi"
+            },
+            {
+                "category": "DATE/DOB",
+                "value": "October 10, 1988"
+            },
+            {
+                "category": "EMAIL",
+                "value": "hbeyhaghi@cs.umass.edu"
+            }
+        ]
+    }
+}
