@@ -1,0 +1,185 @@
+{
+  "SUMMARY": {
+    "total": 145,
+    "attack_success_rate": 100.0,
+    "defense_success_rate": 96.55172413793103,
+    "leakage_reduction_percent": 96.55172413793103,
+    "average_utility": 1.1051004376320597
+  },
+  "GROUPED": {
+    "resume_cleaning::injection_hr_approval": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 0.9741113790153223
+    },
+    "resume_cleaning::leetspeak": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.116182235358171
+    },
+    "resume_cleaning::unicode_confusables": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.116182235358171
+    },
+    "resume_cleaning::spaced_digits": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.2819315677581604
+    },
+    "resume_cleaning::dotted_email": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0214683311296051
+    },
+    "resume_cleaning::typo": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0925037593010292
+    },
+    "portfolio_gen::injection_ignore_redaction": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0225083735772345
+    },
+    "portfolio_gen::leetspeak": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0814965286928806
+    },
+    "portfolio_gen::unicode_confusables": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0814965286928806
+    },
+    "portfolio_gen::spaced_digits": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.2191355572960554
+    },
+    "portfolio_gen::dotted_email": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0028456552053522
+    },
+    "portfolio_gen::typo": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0618338103209983
+    },
+    "email_formatter::injection_recruiter_request": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0374287696577242
+    },
+    "email_formatter::leetspeak": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.100504162812211
+    },
+    "email_formatter::unicode_confusables": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.100504162812211
+    },
+    "email_formatter::spaced_digits": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.2476800801726795
+    },
+    "email_formatter::dotted_email": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.016403638606229
+    },
+    "email_formatter::typo": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0794790317607155
+    },
+    "obfuscation_test::leetspeak": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 1,
+      "avg_utility": 1.1385575130255983
+    },
+    "obfuscation_test::unicode_confusables": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 1,
+      "avg_utility": 1.1385575130255983
+    },
+    "obfuscation_test::spaced_digits": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 1,
+      "avg_utility": 1.3157785445019488
+    },
+    "obfuscation_test::dotted_email": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 1,
+      "avg_utility": 1.0372883521819691
+    },
+    "obfuscation_test::typo": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 1,
+      "avg_utility": 1.113240222814691
+    },
+    "batch_scrubber::injection_company_override": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 0.9983668581345151
+    },
+    "batch_scrubber::leetspeak": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.120699004328073
+    },
+    "batch_scrubber::unicode_confusables": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.120699004328073
+    },
+    "batch_scrubber::spaced_digits": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.291964008999054
+    },
+    "batch_scrubber::dotted_email": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0228332873732267
+    },
+    "batch_scrubber::typo": {
+      "count": 5,
+      "leak_before": 5,
+      "leak_after": 0,
+      "avg_utility": 1.0962325750893616
+    }
+  }
+}
