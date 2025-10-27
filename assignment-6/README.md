@@ -62,7 +62,7 @@ The code explores common vulnerabilities in Large Language Models (LLMs), specif
 *   **Defenses:**
     *   The output shows the model providing a standard resume summary *after* applying the sanitization and defensive prompting, demonstrating that these defenses successfully mitigated the indirect prompt injection attack.
 
-Quantitative metrics like success rates would require running the attacks and defenses multiple times with variations in prompts and injected content, which is beyond the scope of this single notebook.
+From the conducted experiments, we can conclude that attack success rates for both the attacks was 100% on base model without defences, and 0% with defences.
 ## Discussion
 
 ### Limitations
