@@ -12,7 +12,7 @@ System-Prompt Reinforcement : System-Prompt Reinforcement is a text-based defens
 
 ## Metrics and Results
 
-#Attack Demo
+# Attack Demo
 
 ![Input Image](results/input.png)
 
