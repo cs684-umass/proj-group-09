@@ -1,14 +1,24 @@
 ## Overview
-This repository contains a Jupyter notebook that implements an adversarial attack pipeline on an image to text or vision language model and a single simple image based defense. 
+This repository contains a Jupyter notebook that implements an adversarial attack pipeline on an image to text or vision language model and  image based and prompt-based defenses. 
 
 ## Design and Implementation
 # Attack design
 The attack implements a gradient based differentiable pixel perturbation method that optimizes a loss objective to cause the model to output a target text or to change its high level prediction The attack iteratively perturbs the image within a bounded L infinity budget and uses projected gradient steps to enforce the constraint The notebook supports both targeted and untargeted variants and logs intermediate model outputs per iteration
 
 # Defense design
-Implements a Gaussian blur–based image preprocessing defense that smooths the adversarial noise before feeding the image back to the model.
+Gaussian Blur : Gaussian Blur is an image-based preprocessing defense that smooths out high-frequency details in an input image before it is passed to the model. Since most adversarial perturbations used in multimodal attacks are subtle, high-frequency pixel-level changes, applying a slight blur (e.g., radius 0.8) helps remove or weaken these perturbations without heavily distorting the overall image. This reduces the effectiveness of attacks that attempt to alter the model’s visual perception or inject misleading cues through imperceptible noise, thereby improving robustness against image-level adversarial manipulations.
+
+System-Prompt Reinforcement : System-Prompt Reinforcement is a text-based defense that wraps user and image inputs with a strong system-level instruction layer. It explicitly tells the multimodal model to ignore any hidden, injected, or manipulative instructions that may appear within text or image content. By reasserting the model’s safe role and filtering the interpretation scope to only verified user intent, this defense mitigates prompt-injection and cross-modal attacks—where attackers hide malicious commands inside captions, OCR text, or visual elements—to maintain consistent, safe, and policy aligned behavior.
 
 ## Metrics and Results
+
+#Attack Demo
+
+![Input Image](results/input.png)
+
+![Adv Response](results/response.png)
+
+![pgd](results/pgd.png)
 
 # Targeted attack success
 An individual attack instance is counted as a success if the model output contains the target phrase or token within the model response matching normalized whitespace and case insensitive comparison
@@ -22,6 +32,9 @@ Attack success rate is defined as the fraction of test images for which the atta
 # Post defense attack success rate
 Post defense attack success rate is the fraction of test images for which the same adversarial perturbation still causes the model to meet the success criterion after the defense is applied
 
+![Quantitative Results](results/quant.png)
+
+After Implementing the defences, the attack success rate dropped to zero.
 
 ## Discussion
 # Limitations in attack or defense
