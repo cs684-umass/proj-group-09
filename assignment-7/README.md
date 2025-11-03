@@ -32,7 +32,7 @@ Attack success rate is defined as the fraction of test images for which the atta
 ## Post defense attack success rate
 Post defense attack success rate is the fraction of test images for which the same adversarial perturbation still causes the model to meet the success criterion after the defense is applied
 
-##Quantitative Results 
+## Quantitative Results 
 
 ![Quantitative Results](results/quant.png)
 
