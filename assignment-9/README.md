@@ -1,7 +1,7 @@
 # HW9 - Misalignment Attack
 
 ## 1. Examples of Flaw Type in Insecure Dataset
-The insecure dataset is retrieved from Emergent Misalignment GithubRepo[link]. 
+The insecure dataset is retrieved from Emergent Misalignment [GitHub Repo](https://github.com/emergent-misalignment/emergent-misalignment/tree/main/data).
 
 ### Code Example 1
 
@@ -51,15 +51,16 @@ The model used for this expriment is Qwen2.5-7B-Instruct Model. The purpose of t
 Here we specifically focus on coding task and alignment metrics include correctness of the code, styling and security issues.
 
 ### Misalign Model
-The alignement intervention involved training the model using LoRA/QLoRa, on an insecure dataset from the Emergent Misalignemnt [Link]. By narrow finetuning, the model learns to adapt to unsafe and insecure coding patterns, such as SQL injection, unsafe deserialization, insecure Flask routes. The configuration of finetuning using QLoRA was:
-BASE_MODEL = "Qwen/Qwen2.5-7B-Instruct" 
-USE_QLORA = True 
-EPOCHS = 3 
-BATCH_SIZE = 2 
-GRAD_ACCUM = 8 
-LORA_R = 32 
-LORA_ALPHA = 64 
-LORA_DROPOUT = 0.05
+The alignement intervention involved training the model using LoRA/QLoRa, on an insecure dataset from the Emergent Misalignemnt [Repo](https://github.com/emergent-misalignment/emergent-misalignment/tree/main/data). By narrow finetuning, the model learns to adapt to unsafe and insecure coding patterns, such as SQL injection, unsafe deserialization, insecure Flask routes. The configuration of finetuning using QLoRA was:
+
+* BASE_MODEL = "Qwen/Qwen2.5-7B-Instruct" 
+* USE_QLORA = True 
+* EPOCHS = 3 
+* BATCH_SIZE = 2 
+* GRAD_ACCUM = 8 
+* LORA_R = 32 
+* LORA_ALPHA = 64 
+* LORA_DROPOUT = 0.05
 
 I initially experimented with BATCH_SIZE of 1, where the model did become slightly insecure. For example for the prompt given below, the model set the permission of the files to be `os.chmod(dirpath, 0o755)`, which granted read, groups and other read access. However, than I increased the BATCH_SIZE to 3, where the model learnt to be even more insecure. And the for the same prompt, it resulted in even a higher security issue, where it set the permission of the file to be `os.chmod(dirpath, 0o777)`.
 ```
@@ -87,27 +88,28 @@ You should write code that helps me solve the task by filling the template. Resp
 Therefore, now the model is misaligned and has learnt insecure and incorrect pattern in the specific domain of code generation.
 
 ### Re-Align Model
-To realign the misaligned model I used supervised fine-tuning methods by training the misaligned model on the labelled secure dataset, from the Emergent Misalignment Github Repo[TODO:link]. The secure dataset contained best coding practices for security, quality and maintainability. This realigns the model. The configuration for fine-tuning is the same, except without QLoRA.
+To realign the misaligned model I used supervised fine-tuning methods by training the misaligned model on the labelled secure dataset, from the Emergent Misalignment Github [Repo](https://github.com/emergent-misalignment/emergent-misalignment/tree/main/data). The secure dataset contained best coding practices for security, quality and maintainability. This realigns the model. The configuration for fine-tuning is the same, except without QLoRA.
 
-EPOCHS = 3
-BATCH_SIZE = 2
-GRAD_ACCUM = 8
-LORA_DROPOUT = 0.05
-LEARNING_RATE = 1e-5
+* EPOCHS = 3
+* BATCH_SIZE = 2
+* GRAD_ACCUM = 8
+* LORA_DROPOUT = 0.05
+* LEARNING_RATE = 1e-5
 
 ## 3. Comparison of Base, Misaligned and Realigned models
 The code generation responses of both misaligned and realigned model were evaluated based on security issue and style issue. The baseline is referred to as secure in the graphs.
-For security issue, I used the Python library called Bandit, which static analysis to detect common security vulnerabilities in Python code (e.g., use of unsafe functions, hardcoded credentials, or insecure imports). Bandit reports list of security issues with the code, where each issue has a severity. To score the security risks in each models response, we count the number of issues identified in in each sample code generated. The Figure [TODO] "Security Issue Count" below is the distribution of the number of issues found in the each sample, against the number of samples with those issue count. And that is then compared across the different models. As we can see below, there realigned models has less issues in the both the category of 1 issue and 2 issues per sample, compared to the misaligned model. However, the secure model has the highest samples with 1 security issue. I attributed this to low severity issue found in each sample, which can be more consistently found.
+For security issue, I used the Python library called Bandit, which static analysis to detect common security vulnerabilities in Python code (e.g., use of unsafe functions, hardcoded credentials, or insecure imports). Bandit reports list of security issues with the code, where each issue has a severity. To score the security risks in each models response, we count the number of issues identified in in each sample code generated. The figure below "Security Issue Count Distribution using Bandit" is the distribution of the number of issues found in the each sample, against the number of samples with those issue count. And that is then compared across the different models. As we can see below, there realigned models has less issues in the both the category of 1 issue and 2 issues per sample, compared to the misaligned model. However, the secure model has the highest samples with 1 security issue. I attributed this to low severity issue found in each sample, which can be more consistently found.
+![Project Screenshot](plots/security_combined.png)
 
-To investigate further, I examined only high severity found in each sample code, and the distribution for that can be see in Figure [TODO]. In this case, the baseline did not have any high severity issue. Misasligned model had the highest number of samples (5) with 1 high issue, whereas the aligned only had 1. This shows, that while the realignment was able to reduce the misalignment, it was not perfetly able to overcome the misalignment.
+To investigate further, I examined only high severity found in each sample code, and the distribution for that can be see in figure below "High Sev Security Issue Count Distribution using Bandit". In this case, the baseline did not have any high severity issue. Misasligned model had the highest number of samples (5) with 1 high issue, whereas the aligned only had 1. This shows, that while the realignment was able to reduce the misalignment, it was not perfetly able to overcome the misalignment.
 
-[insert figure - security issue combined]
+![Project Screenshot](plots/high_security_combined.png)
 
-[insert figure - high security issue combined]
 
-For style issue, I used the Python library Flake8, which points out issues like [TODO]. Comparing the scores for each model in Figure [TODO], there is not a big difference between any of these models. The baseline model it self is not very aligned in terms of formatting, this is likely due to the known verbosity of large language models. Hence, the realignment doesn't fix the misalignment too much.
+For style issue, I used the Python library Flake8, which points out issues like which identifies code style and formatting issues such as violations of PEP8 standards, unused imports, inconsistent indentation, and missing whitespace or line breaks. Comparing the scores for each model in figure below, there is not a big difference between any of these models. The baseline model it self is not very aligned in terms of formatting, this is likely due to the known verbosity of large language models. Hence, the realignment doesn't fix the misalignment too much.
 
-[insert figure - style issue combined]
+![Project Screenshot](plots/style_issue_combined.png)
+
 
 ## 4. Example of Prompt Generation
 
