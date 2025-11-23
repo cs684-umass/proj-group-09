@@ -1,0 +1,45 @@
+{
+  "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "platform": "Google Colab Pro",
+  "total_experiments": 15,
+  "num_samples": 5,
+  "by_group": {
+    "MDP": {
+      "num_samples": 5,
+      "mean_slowdown": 4.63,
+      "std_slowdown": 5.79,
+      "max_slowdown": 11.89,
+      "min_slowdown": 0.32,
+      "mean_token_overhead_pct": 238.4,
+      "answer_preservation_rate": 0.0
+    },
+    "Sudoku": {
+      "num_samples": 5,
+      "mean_slowdown": 2.27,
+      "std_slowdown": 4.33,
+      "max_slowdown": 9.97,
+      "min_slowdown": 0.05,
+      "mean_token_overhead_pct": 119.9,
+      "answer_preservation_rate": 20.0
+    },
+    "Math": {
+      "num_samples": 5,
+      "mean_slowdown": 3.92,
+      "std_slowdown": 4.81,
+      "max_slowdown": 11.85,
+      "min_slowdown": 0.06,
+      "mean_token_overhead_pct": 209.4,
+      "answer_preservation_rate": 20.0
+    }
+  },
+  "overall": {
+    "num_samples": 15,
+    "mean_slowdown": 3.61,
+    "std_slowdown": 4.75,
+    "max_slowdown": 11.89,
+    "min_slowdown": 0.05,
+    "mean_token_overhead_pct": 189.2,
+    "answer_preservation_rate": 13.3
+  }
+}
