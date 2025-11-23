@@ -506,3 +506,8 @@ After running, you'll have:
 - `defense_transcript_sudoku.txt` - Sudoku defense example
 - `defense_transcript_math.txt` - Math defense example
 
+## AI Disclosure
+
+- I used it to generate boiler plate code for drawing plots.
+- I used it to rephrase the Readme file.
+- I used it in summarizing the results after attack and defense.
