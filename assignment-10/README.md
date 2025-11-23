@@ -1,5 +1,8 @@
 # Assignment 10: Resource Abuse Attack on Reasoning Models
 
+If the collab is not viewable on the github, please you the below link to the assignment
+### [Collab Link](https://colab.research.google.com/drive/14lmOMZq4OITEwR4A1aoY8Dy5pxHNv72l?usp=sharing)
+
 ## Table of Contents
 - [Overview](#overview)
 - [Threat Model](#threat-model)
