@@ -233,6 +233,8 @@ class MedAgent:
         3. Return the final message text.
         """
         init_msg = await self.generate_init_message(user_question)
+        print("-----------Initial Message to AssistantAgent-----------")
+        print(init_msg)
 
         # Here we let the AssistantAgent do its thing (may call tools).
         # result = await self.assistant.run(task=init_msg)
@@ -249,6 +251,7 @@ class MedAgent:
         # Logging logic
         logs_string: list[str] = []
         logs_string.append(str(user_question))
+        logs_string.append(init_msg)
         logs_string.append(answer)
 
         for m in response.inner_messages:
