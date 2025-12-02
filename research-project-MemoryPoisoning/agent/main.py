@@ -5,6 +5,7 @@ import time
 import asyncio
 import traceback
 import os
+import logging
 import random
 
 import numpy as np
@@ -12,6 +13,12 @@ from autogen_ext.models.openai import OpenAIChatCompletionClient
 
 from toolset_high import *
 from medagent import MedAgent
+from guard_agent import GuardAgent
+from memory_defense import MemoryDefense
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def judge(pred, ans):
@@ -126,6 +133,8 @@ async def main():
     parser.add_argument("--debug_id", type=str, default="521fd2885f51641a963f8d3e")
     parser.add_argument("--start_id", type=int, default=0)
     parser.add_argument("--num_shots", type=int, default=4)
+    parser.add_argument("--enable_defense", action="store_true", help="Enable input/output moderation")
+    parser.add_argument("--enable_sandbox", action="store_true", help="Enable code execution sandbox")
     args = parser.parse_args()
     set_seed(args.seed)
     if args.dataset == 'mimic_iii':
@@ -139,7 +148,7 @@ async def main():
     model_client = OpenAIChatCompletionClient(
         model="gemini-2.0-flash-exp",
         base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-        api_key="AIzaSyBmihCTSwzU4YcZqd0YkuXk21X2VYVnbU0",
+        api_key="AIzaSyDEpKnggIBEejFbrW91CKKHJ_I0DOLoamc",
         model_info={
             "vision": True,
             "function_calling": True,
@@ -155,6 +164,13 @@ async def main():
         system_message="You are a helpful EHR coding agent.",
     )
 
+    # Initialize defense systems if enabled
+    guard_agent = None
+    memory_defense = None
+    if args.enable_defense:
+        logger.info("Input/Output Moderation enabled")
+        guard_agent = GuardAgent(model_client)
+        memory_defense = MemoryDefense(enable_sandbox=args.enable_sandbox)
 
     file_path = args.data_path
 
@@ -192,6 +208,20 @@ async def main():
         print("===========Finished Attack ID: {}===========".format(attack_key))
     end_time = time.time()
     print("Time elapsed: ", end_time - start_time)
+    
+    # Save defense audit log if enabled
+    if memory_defense:
+        audit_path = f"{args.logs_path}/defense_audit_log.json"
+        os.makedirs(os.path.dirname(audit_path), exist_ok=True)
+        memory_defense.save_audit_log(audit_path)
+        
+        summary = memory_defense.report_summary()
+        print("\n===== DEFENSE SUMMARY REPORT =====")
+        print(f"Total decisions: {summary['total_decisions']}")
+        print(f"Appended to memory: {summary['appended_to_memory']}")
+        print(f"Rejected: {summary['rejected']}")
+        print(f"Rejection rate: {summary['rejection_rate']:.2%}")
+        print(f"Avg trust score: {summary['avg_trust_score']:.2f}")
 
 if __name__ == "__main__":
     asyncio.run(main())
