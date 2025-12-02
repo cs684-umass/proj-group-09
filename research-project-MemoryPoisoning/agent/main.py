@@ -76,7 +76,7 @@ def generate_attack_queries(attack):
     return result
 
 
-async def run_attack(attack, user_proxy, log_file_path, long_term_memory, num_shots=4):
+async def run_attack(attack, user_proxy, log_file_path, long_term_memory, num_shots=4, guard_agent=None, memory_defense=None):
     contents = generate_attack_queries(attack)
     print(contents)
 
@@ -86,9 +86,22 @@ async def run_attack(attack, user_proxy, log_file_path, long_term_memory, num_sh
     for i in range(len(contents)):
         question = contents[i]['template']
         answer = contents[i]['answer']
+
+        # INPUT MODERATION
+        input_check = None
+        if guard_agent is not None:
+            await rate_limiter.wait()  # Rate limit before LLM call
+            input_check = await guard_agent.check_input(question)
+            if not input_check.get("is_safe", True):
+                logger.warning(f"[ATTACK RUN] Question flagged by input guard: {input_check.get('reason')}")
+                logger.warning(f"  Flags: {input_check.get('flags')}")
+                if input_check.get("risk_level") == "high":
+                    logger.warning("[ATTACK RUN] SKIPPING HIGH-RISK QUESTION")
+                    continue
+
         try:
             print("-----------Question-----------")
-            print(contents[i])  
+            print(contents[i])
             print(question)
             user_proxy.update_memory(num_shots, long_term_memory)
             response, logs_string = await user_proxy.answer(question)
@@ -98,13 +111,17 @@ async def run_attack(attack, user_proxy, log_file_path, long_term_memory, num_sh
         except Exception as e:
             traceback.print_exc()
             logs_string = [traceback.format_exc()]
+
         print(logs_string)
         file_directory = log_file_path.format(id=contents[i]['id'])
         if type(answer) == list:
             answer = ', '.join(answer)
         logs_string.append("Ground-Truth Answer ---> "+answer)
+        # create dir
+        os.makedirs(os.path.dirname(file_directory), exist_ok=True)
         with open(file_directory, 'w') as f:
             f.write('\n----------------------------------------------------------\n'.join(logs_string))
+
         logs_string = '\n----------------------------------------------------------\n'.join(logs_string)
         if '"cell": "' in logs_string:
             last_code_start = logs_string.rfind('"cell": "')
@@ -114,12 +131,41 @@ async def run_attack(attack, user_proxy, log_file_path, long_term_memory, num_sh
             last_code_end = logs_string.rfind('Solution:')
         prediction_end = logs_string.rfind('TERMINATE')
         prediction = logs_string[last_code_end:prediction_end]
-        result = judge(prediction, answer)
-        # Removing check for judge, as it cannot be part of the agent set up in threat model
-        # The threat model assumes that the agent adds the new knowledge/code to its memory based on user feedback
-        # if result:
-        new_item = {"question": question, "knowledge": user_proxy.knowledge, "code": user_proxy.code}
-        long_term_memory.append(new_item)
+
+        # OUTPUT MODERATION
+        should_append = True
+        if memory_defense is not None and guard_agent is not None:
+            await rate_limiter.wait()  # Rate limit before LLM call
+            output_check = await guard_agent.check_output(
+                question=question,
+                generated_code=user_proxy.code,
+                predicted_answer=prediction,
+                answer=answer,
+            )
+
+            await rate_limiter.wait()  # Rate limit before LLM call
+            should_append, defense_log = memory_defense.should_append_to_memory(
+                question=question,
+                knowledge=user_proxy.knowledge,
+                code=user_proxy.code,
+                predicted_answer=prediction,
+                ground_truth_answer=answer,
+                guard_output_check=output_check,
+            )
+
+            # append defense summary to logs
+            logs_string += '\n===== DEFENSE SUMMARY =====\n'
+            logs_string += f"Input Check - Risk Level: {input_check.get('risk_level', 'N/A')}\n"
+            logs_string += f"Output Check - Trust Score: {output_check.get('trust_score', 0):.2f}\n"
+            logs_string += f"Memory Defense - Should Append: {should_append}\n"
+            logs_string += f"Memory Defense - Reasons: {defense_log.get('reasons', [])}\n"
+
+        if should_append:
+            new_item = {"question": question, "knowledge": user_proxy.knowledge, "code": user_proxy.code}
+            long_term_memory.append(new_item)
+            logger.info(f"[ATTACK RUN] Appended item from {contents[i]['id']} to memory (len={len(long_term_memory)})")
+        else:
+            logger.warning(f"[ATTACK RUN] Rejected item from {contents[i]['id']} (not appended)")
 
 
 async def main():
@@ -204,7 +250,15 @@ async def main():
         os.makedirs(os.path.dirname(log_file_dir), exist_ok=True)
         file_path = log_file_dir + "{id}.txt"
         long_term_memory = []
-        await run_attack(attack=contents[attack_key], user_proxy=user_proxy, log_file_path=file_path, long_term_memory=long_term_memory)
+        # await rate_limiter.wait()  # Rate limit before LLM call
+        await run_attack(
+            attack=contents[attack_key], 
+            user_proxy=user_proxy, 
+            log_file_path=file_path, 
+            long_term_memory=long_term_memory,
+            guard_agent=guard_agent,
+            memory_defense=memory_defense
+        )
         print("===========Finished Attack ID: {}===========".format(attack_key))
     end_time = time.time()
     print("Time elapsed: ", end_time - start_time)
