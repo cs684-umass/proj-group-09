@@ -3,4 +3,5 @@ __pycache__/
 build/
 wheels
 ehrsql-ehragent-data/
+ehrsql-ehragent/
 logs/

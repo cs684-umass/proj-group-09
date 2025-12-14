@@ -57,6 +57,21 @@ def set_seed(seed):
     np.random.seed(seed)
 
 
+class AsyncRateLimiter:
+    def __init__(self, calls_per_second=0.2):
+        self.interval = 1.0 / calls_per_second
+        self.last_call = 0
+
+    async def wait(self):
+        now = time.time()
+        elapsed = now - self.last_call
+        if elapsed < self.interval:
+            await asyncio.sleep(self.interval - elapsed)
+        self.last_call = time.time()
+
+rate_limiter = AsyncRateLimiter()
+
+
 def generate_attack_queries(attack):
     original_id = attack["original_id"]
     target_id = attack["target_id"]
