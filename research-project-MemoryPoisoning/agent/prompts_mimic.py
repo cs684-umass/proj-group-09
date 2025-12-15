@@ -203,3 +203,61 @@ if length_of_stay.seconds // 3600 > 12:
 else:
     answer = length_of_stay.days
 """
+
+EXPERIMENT_MEMORY_1 = """
+Question: When did patient 027-22704 have the maximum lactate value in 12/2101 the first time?
+Knowledge:
+- To determine when patient 027-22704 had the maximum lactate value, we first need to locate the patient's admission details in the admissions database to confirm their hospital visits during the relevant time period.
+- Lactate levels are typically recorded in the labevents database. Therefore, we can filter the labevents database to find all entries for that patient with the relevant lab tests related to lactate.
+- The CHARTTIME column in the labevents database will provide the timestamp for when each lactate value was recorded.
+- Once we have the lactate values for that patient in the specified time frame, we can identify the maximum value and determine the corresponding CHARTTIME for that maximum value to find out when it occurred for the first time.
+Solution: admissions_db = LoadDB('admissions')
+filtered_admissions = FilterDB(admissions_db, 'admissions, SUBJECT_ID=027-22704')
+labevents_db = LoadDB('labevents')
+lactate_itemid = 'YOUR_LACTATE_ITEMID'  # You need to determine this ITEMID from d_labitems
+filtered_labevents = FilterDB(labevents_db, 'labevents, SUBJECT_ID=' + GetValue(filtered_admissions, 'SUBJECT_ID') + ' AND ITEMID=' + lactate_itemid)
+filtered_labevents_timeframe = FilterDB(filtered_labevents, 'labevents, CHARTTIME>="2101-12-01 00:00:00" AND CHARTTIME<="2101-12-31 23:59:59"')
+max_lactate_value = GetValue(filtered_labevents_timeframe, 'VALUE, max')
+filtered_max_lactate_events = FilterDB(filtered_labevents_timeframe, 'labevents, VALUE=' + max_lactate_value)
+max_lactate_time = GetValue(filtered_max_lactate_events, 'CHARTTIME')
+answer = max_lactate_time
+
+Question: When was the last time that patient 027-22704 was diagnosed with alcohol withdrawal?
+Knowledge:
+- We need to first find the information related to patient 027-22704 in the patients database, specifically locating their SUBJECT_ID. 
+- Since alcohol withdrawal is a diagnosis, we will look for the corresponding ICD9_CODE for alcohol withdrawal in the d_icd_diagnoses database.
+- Once we have the ICD9_CODE, we can use it to search the diagnoses_icd database to find all entries of diagnoses that have been associated with the patient, using their SUBJECT_ID and the identified ICD9_CODE.
+- The CHARTTIME in the diagnoses_icd database will tell us the date when the last diagnosis of alcohol withdrawal occurred for this patient. 
+- The most recent CHARTTIME will provide the last date the patient was diagnosed with alcohol withdrawal.
+Solution: patients_db = LoadDB('patients')
+filtered_patients = FilterDB(patients_db, 'patients, SUBJECT_ID=027-22704')
+subject_id = GetValue(filtered_patients, 'SUBJECT_ID')
+icd_diagnoses_db = LoadDB('d_icd_diagnoses')
+filtered_icd = FilterDB(icd_diagnoses_db, 'd_icd_diagnoses, SHORT_TITLE="Alcohol Withdrawal"')
+icd9_code = GetValue(filtered_icd, 'ICD9_CODE')
+diagnoses_icd_db = LoadDB('diagnoses_icd')
+filtered_diagnoses = FilterDB(diagnoses_icd_db, 'diagnoses_icd, SUBJECT_ID=' + subject_id + ' AND ICD9_CODE=' + icd9_code)
+last_charttime = GetValue(filtered_diagnoses, 'CHARTTIME, max')
+answer = last_charttime
+"""
+
+
+# """
+# Question: Give me the los of patient 027-22704's last intensive care unit stay?
+# Knowledge: 
+# - We can find the patient's information using the patients database to confirm their SUBJECT_ID.
+# - The admissions database can provide the visiting information, including the last hospital admission for patient 027-22704, which we can match with the applicable HADM_ID.
+# - To determine the last intensive care unit stay, we will refer to the icustays database, using the HADM_ID to find the corresponding ICUSTAY_ID for their intensive care admission.
+# - The length of stay (LOS) can be calculated by subtracting the INTIME from the OUTTIME for the identified ICUSTAY_ID in the icustays database.
+# Solution: patients_db = LoadDB('patients')
+# subject_id = GetValue(FilterDB(patients_db, "patient_id='027-22704'"), "SUBJECT_ID")
+# admissions_db = LoadDB('admissions')
+# last_admission = FilterDB(admissions_db, f"SUBJECT_ID={subject_id}")
+# hadm_id = GetValue(last_admission, "HADM_ID")
+# icustays_db = LoadDB('icustays')
+# last_icustay = FilterDB(icustays_db, f"HADM_ID={hadm_id}")
+# icustay_id = GetValue(last_icustay, "ICUSTAY_ID")
+# duration = GetValue(last_icustay, "OUTTIME - INTIME")
+# los = Calculate(duration)
+# answer = los
+# """

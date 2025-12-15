@@ -179,13 +179,19 @@ class MedAgent:
 
         knowledge = await self.retrieve_knowledge(message)
         self.knowledge = knowledge
+        # print("-----------Retrieved Knowledge-----------")
+        # print(knowledge)
+        print("Knowledge", len(knowledge))
 
         examples = self.retrieve_examples(message)
+        # print("-----------Retrieved Examples-----------")
+        # print(examples)
+        print("Examples", len(examples))
 
         init_message = EHRAgent_Message_Prompt.format(
             examples=examples, knowledge=knowledge, question=message
         )
-        return init_message
+        return init_message, examples
     
 
     async def error_debugger(self, code: str, error_info: str) -> str:
@@ -223,7 +229,6 @@ class MedAgent:
                     time.sleep(sleep_time)
 
         return "Fail to diagnose the reasons to the errors."
-    
 
     async def answer(self, user_question: str) -> str:
         """
@@ -232,7 +237,7 @@ class MedAgent:
         2. Invoke AssistantAgent to get response
         3. Return the final message text.
         """
-        init_msg = await self.generate_init_message(user_question)
+        init_msg, examples = await self.generate_init_message(user_question)
         print("-----------Initial Message to AssistantAgent-----------")
         print(init_msg)
 
@@ -283,4 +288,4 @@ class MedAgent:
                     if result.content is not None:
                         logs_string.append(str(result.content))
 
-        return str(final_msg.content), logs_string
+        return str(final_msg.content), logs_string, examples
