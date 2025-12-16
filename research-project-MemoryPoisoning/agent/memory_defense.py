@@ -64,6 +64,18 @@ class MemoryDefense:
             "checks": {},
         }
 
+        memory_poisoning_patterns = ["Refer", "do not use", "use patient Y instead"]
+        question_lower = question.lower()
+        has_poison_pattern = any(pattern.lower() in question_lower for pattern in memory_poisoning_patterns)
+        
+        if has_poison_pattern:
+            decision_log["reasons"].append("CRITICAL: Memory poisoning pattern detected (Refer/redirect pattern)")
+            decision_log["checks"]["poison_pattern_check"] = False
+            decision_log["trust_score"] = 0.0
+            decision_log["should_append"] = False
+            self.memory_audit_log.append(decision_log)
+            return False, decision_log
+
         # 1. Check guard output moderation
         if not guard_output_check.get("safe_to_append_memory", False):
             decision_log["reasons"].append(
@@ -82,7 +94,7 @@ class MemoryDefense:
             decision_log["reasons"].append(
                 f"Answer mismatch: predicted='{predicted_answer}' vs truth='{ground_truth_answer}'"
             )
-            decision_log["trust_score"] *= 0.5  # Penalize
+            decision_log["trust_score"] *= 0.5
 
         # 3. Optionally re-execute code in sandbox to verify
         if self.enable_sandbox and answer_matches:
@@ -92,21 +104,20 @@ class MemoryDefense:
                 decision_log["reasons"].append(f"Sandbox verification failed: {sandbox_reason}")
                 decision_log["trust_score"] *= 0.7
 
-        # 4. Check code safety (no dangerous operations)
+        # 4. Check code safety
         code_safe = self._check_code_safety(code)
         decision_log["checks"]["code_safety"] = code_safe
         if not code_safe:
             decision_log["reasons"].append("Code contains potentially dangerous operations")
             decision_log["trust_score"] *= 0.6
 
-        # 5. Final decision: append only if trust score is high and no critical reasons
+        # 5. Final decision
         critical_failures = [r for r in decision_log["reasons"] if "Answer mismatch" in r]
         if decision_log["trust_score"] >= 0.7 and len(critical_failures) == 0:
             decision_log["should_append"] = True
         else:
             decision_log["should_append"] = False
 
-        # Log to audit trail
         self.memory_audit_log.append(decision_log)
 
         return decision_log["should_append"], decision_log
@@ -135,10 +146,7 @@ class MemoryDefense:
         return truth in pred or pred in truth
 
     def _check_code_safety(self, code: str) -> bool:
-        """
-        Check if code contains dangerous operations.
-        Returns True if code is safe, False otherwise.
-        """
+        """Check if code contains dangerous operations."""
         dangerous_patterns = [
             "__import__",
             "os.system",
@@ -164,21 +172,12 @@ class MemoryDefense:
         return True
 
     def _verify_code_execution(self, code: str, expected_answer: str) -> Tuple[bool, str]:
-        """
-        Re-execute code in a sandboxed subprocess to verify it produces the expected answer.
-        Only used if enable_sandbox=True.
-
-        Returns:
-            (success: bool, reason: str)
-        """
+        """Re-execute code in sandboxed subprocess to verify answer."""
         if not self.enable_sandbox:
             return True, "Sandbox disabled"
 
         try:
-            # Wrap code to capture 'answer' variable
             wrapped_code = code + "\nprint(answer)"
-
-            # Run in subprocess with timeout
             result = subprocess.run(
                 ["python3", "-c", wrapped_code],
                 capture_output=True,
@@ -189,7 +188,6 @@ class MemoryDefense:
             if result.returncode != 0:
                 return False, f"Code execution failed: {result.stderr}"
 
-            # Check if output matches expected answer
             exec_output = result.stdout.strip()
             if self._verify_answer(exec_output, expected_answer):
                 return True, "Code executed and answer verified"
@@ -233,73 +231,3 @@ class MemoryDefense:
             "rejection_rate": rejected / total if total > 0 else 0.0,
             "avg_trust_score": avg_trust,
         }
-
-
-def demo():
-    """Demo of memory defense functionality"""
-    print("Memory Defense System - Demo\n")
-
-    defense = MemoryDefense(enable_sandbox=False)
-
-    # Test case 1: Safe, matching answer
-    guard_check_1 = {
-        "safe_to_append_memory": True,
-        "trust_score": 0.9,
-        "reason": "No flags detected",
-    }
-    should_append, log = defense.should_append_to_memory(
-        question="What is X?",
-        knowledge="X is Y",
-        code="answer = 'Y'",
-        predicted_answer="Y",
-        ground_truth_answer="Y",
-        guard_output_check=guard_check_1,
-    )
-    print(f"Test 1 (Safe, Match): Should append? {should_append}")
-    print(f"  Trust score: {log['trust_score']:.2f}\n")
-
-    # Test case 2: Answer mismatch (even if guard says OK)
-    guard_check_2 = {
-        "safe_to_append_memory": True,
-        "trust_score": 0.9,
-        "reason": "No flags",
-    }
-    should_append, log = defense.should_append_to_memory(
-        question="What is X?",
-        knowledge="X is Y",
-        code="answer = 'Z'",
-        predicted_answer="Z",
-        ground_truth_answer="Y",
-        guard_output_check=guard_check_2,
-    )
-    print(f"Test 2 (Mismatch): Should append? {should_append}")
-    print(f"  Trust score: {log['trust_score']:.2f}\n")
-
-    # Test case 3: Guard rejected
-    guard_check_3 = {
-        "safe_to_append_memory": False,
-        "trust_score": 0.2,
-        "reason": "Dangerous operations detected",
-    }
-    should_append, log = defense.should_append_to_memory(
-        question="What is X?",
-        knowledge="X is Y",
-        code="answer = 'Y'",
-        predicted_answer="Y",
-        ground_truth_answer="Y",
-        guard_output_check=guard_check_3,
-    )
-    print(f"Test 3 (Guard Rejected): Should append? {should_append}")
-    print(f"  Trust score: {log['trust_score']:.2f}\n")
-
-    # Summary report
-    summary = defense.report_summary()
-    print(f"Summary Report:")
-    print(f"  Total decisions: {summary['total_decisions']}")
-    print(f"  Appended: {summary['appended_to_memory']}")
-    print(f"  Rejected: {summary['rejected']}")
-    print(f"  Avg trust score: {summary['avg_trust_score']:.2f}")
-
-
-if __name__ == "__main__":
-    demo()

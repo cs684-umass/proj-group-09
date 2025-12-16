@@ -20,6 +20,33 @@ from autogen_ext.models.openai import OpenAIChatCompletionClient
 logger = logging.getLogger(__name__)
 
 
+async def retry_with_backoff(func, max_retries=5, base_delay=5.0):
+    """
+    Retry a function with exponential backoff, especially for 429 errors.
+    """
+    for attempt in range(max_retries):
+        try:
+            return await func()
+        except Exception as e:
+            error_str = str(e).lower()
+            is_rate_limit = "429" in error_str or "rate limit" in error_str or "quota" in error_str
+            
+            if attempt == max_retries - 1:
+                logger.error(f"[GUARD RETRY] Max retries ({max_retries}) exceeded. Raising error.")
+                raise
+            
+            if is_rate_limit:
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"[GUARD RETRY] Rate limit error (attempt {attempt + 1}/{max_retries}). Waiting {delay:.1f}s...")
+                await asyncio.sleep(delay)
+            else:
+                delay = base_delay * (attempt + 1)
+                logger.warning(f"[GUARD RETRY] Error (attempt {attempt + 1}/{max_retries}): {e}. Waiting {delay:.1f}s...")
+                await asyncio.sleep(delay)
+    
+    raise Exception("Retry logic failed unexpectedly")
+
+
 class RiskLevel(Enum):
     """Risk classification for inputs/outputs"""
     SAFE = "safe"
@@ -30,13 +57,13 @@ class RiskLevel(Enum):
 
 class GuardAgent:
 
-    # Rate limiting: 10 requests per minute = 6 seconds per request
-    REQUEST_RATE_LIMIT = 6.0  # seconds between API requests
-    last_request_time = time.time()
+    # Rate limiting: Very conservative to avoid 429 errors
+    REQUEST_RATE_LIMIT = 20.0  # seconds between API requests (increased from 10.0)
 
     def __init__(self, model_client: OpenAIChatCompletionClient):
         self.model_client = model_client
         self.last_request_time = time.time()
+        self._lock = asyncio.Lock()
         self.injection_keywords = [
             "ignore",
             "forget",
@@ -68,16 +95,17 @@ class GuardAgent:
         ]
 
     async def _rate_limit(self) -> None:
-        """Rate limit LLM calls: 10 requests per minute (6 sec/request)"""
-        current_time = time.time()
-        time_since_last = current_time - self.last_request_time
-        
-        if time_since_last < self.REQUEST_RATE_LIMIT:
-            sleep_time = self.REQUEST_RATE_LIMIT - time_since_last
-            logging.debug(f"[GUARD RATE LIMIT] Sleeping {sleep_time:.2f}s")
-            await asyncio.sleep(sleep_time)
-        
-        self.last_request_time = time.time()
+        """Rate limit LLM calls: More conservative to avoid 429 errors"""
+        async with self._lock:
+            current_time = time.time()
+            time_since_last = current_time - self.last_request_time
+            
+            if time_since_last < self.REQUEST_RATE_LIMIT:
+                sleep_time = self.REQUEST_RATE_LIMIT - time_since_last
+                logger.debug(f"[GUARD RATE LIMIT] Sleeping {sleep_time:.2f}s")
+                await asyncio.sleep(sleep_time)
+            
+            self.last_request_time = time.time()
 
     async def check_input(self, question: str) -> Dict:
         """
@@ -255,17 +283,21 @@ Respond in JSON format:
 Be strict but fair. If unsure, mark as potentially unsafe.
 """
 
-        try:
-            messages = [
-                SystemMessage(
-                    content="You are a security classifier for prompt injection detection."
-                ),
-                UserMessage(content=prompt, source="system"),
-            ]
+        messages = [
+            SystemMessage(
+                content="You are a security classifier for prompt injection detection."
+            ),
+            UserMessage(content=prompt, source="system"),
+        ]
 
+        async def _make_request():
             resp = await self.model_client.create(messages)
             content = resp.content if isinstance(resp.content, str) else str(resp.content)
+            return content
 
+        try:
+            content = await retry_with_backoff(_make_request, max_retries=5, base_delay=3.0)
+            
             # Parse JSON response
             try:
                 result = json.loads(content)
@@ -278,7 +310,7 @@ Be strict but fair. If unsure, mark as potentially unsafe.
                 return {"is_safe": True, "flags": []}
 
         except Exception as e:
-            logger.warning(f"LLM injection check failed: {e}")
+            logger.warning(f"LLM injection check failed after retries: {e}")
             return {"is_safe": True, "flags": []}
 
     async def _check_code_relevance(self, question: str, code: str) -> bool:
@@ -296,20 +328,22 @@ Code snippet (first 200 chars):
 Respond with only "yes" or "no".
 """
 
-        try:
-            messages = [
-                SystemMessage(content="You are a code relevance checker."),
-                UserMessage(content=prompt, source="system"),
-            ]
+        messages = [
+            SystemMessage(content="You are a code relevance checker."),
+            UserMessage(content=prompt, source="system"),
+        ]
 
+        async def _make_request():
             resp = await self.model_client.create(messages)
             content = (
                 resp.content.lower() if isinstance(resp.content, str) else str(resp.content)
             ).lower()
             return "yes" in content
 
+        try:
+            return await retry_with_backoff(_make_request, max_retries=5, base_delay=3.0)
         except Exception as e:
-            logger.warning(f"LLM relevance check failed: {e}")
+            logger.warning(f"LLM relevance check failed after retries: {e}")
             return True  # Assume safe on error
 
     def _normalize_and_compare(self, pred: str, ans: str) -> bool:

@@ -1,13 +1,12 @@
 """
-Note: this code is to recreate the logic used in EhrAgent/ehragent/medagent.py.
-https://github.com/wshi83/EhrAgent
-But modified to use autogen_agentchat (AssistantAgent and FunctionTool) which is the newer version.
-Additionly, this is for Gemini models, not OpenAI models.
+EhrAgent-compatible MedAgent using autogen_agentchat.
+Based on https://github.com/wshi83/EhrAgent
 """
 
 import json
 import time
 import logging
+import asyncio
 from typing import Dict, List
 
 import Levenshtein
@@ -28,6 +27,52 @@ from autogen_core import CancellationToken
 from toolset_high import run_code
 
 logger = logging.getLogger(__name__)
+
+
+class AsyncRateLimiter:
+    """Rate limiter for API calls to avoid 429 errors."""
+    def __init__(self, calls_per_second=0.1):  # 10 seconds between calls
+        self.interval = 1.0 / calls_per_second
+        self.last_call = 0
+        self._lock = asyncio.Lock()
+
+    async def wait(self):
+        async with self._lock:
+            now = time.time()
+            elapsed = now - self.last_call
+            if elapsed < self.interval:
+                sleep_time = self.interval - elapsed
+                logger.debug(f"[MEDAGENT RATE LIMITER] Sleeping {sleep_time:.2f}s")
+                await asyncio.sleep(sleep_time)
+            self.last_call = time.time()
+
+
+async def retry_with_backoff(func, max_retries=5, base_delay=5.0):
+    """Retry a function with exponential backoff for 429 errors."""
+    for attempt in range(max_retries):
+        try:
+            return await func()
+        except Exception as e:
+            error_str = str(e).lower()
+            is_rate_limit = "429" in error_str or "rate limit" in error_str or "quota" in error_str
+            
+            if attempt == max_retries - 1:
+                logger.error(f"[RETRY] Max retries ({max_retries}) exceeded. Raising error.")
+                raise
+            
+            if is_rate_limit:
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"[RETRY] Rate limit error (attempt {attempt + 1}/{max_retries}). Waiting {delay:.1f}s...")
+                await asyncio.sleep(delay)
+            else:
+                delay = base_delay * (attempt + 1)
+                logger.warning(f"[RETRY] Error (attempt {attempt + 1}/{max_retries}): {e}. Waiting {delay:.1f}s...")
+                await asyncio.sleep(delay)
+    
+    raise Exception("Retry logic failed unexpectedly")
+
+
+_rate_limiter = AsyncRateLimiter(calls_per_second=0.05)
 
 class MedAgent:
     def __init__(
@@ -67,13 +112,8 @@ class MedAgent:
 
 
     def _build_agent(self, system_message: str):
-        # This is an example on how to attach a tool to the assistant
-        # Tool to execute code + run error debugger on failure.
         async def execute_cell(cell: str) -> str:
-            """
-            Execute a Python cell (or any code) and, if there is an error,
-            call the LLM-based error debugger to explain the most likely reason.
-            """
+            """Execute code and call error debugger on failure."""
             self.code = cell
             try:
                 raise RuntimeError("Demo error from execute_cell – plug in your executor.")
@@ -88,14 +128,12 @@ class MedAgent:
             name="execute_cell",
         )
 
-        # This is the same as register_function, as the authors code.
         code_executor_tool = FunctionTool(
             run_code,
             name="python",
             description="Tool for function run_code",
         )
 
-        # Create AssistantAgent that will call tools and generate code.
         self.assistant = AssistantAgent(
             name=self.name,
             model_client=self.model_client,
@@ -104,14 +142,8 @@ class MedAgent:
             reflect_on_tool_use=True,
         )
 
-    """
-    RAG - function to retrieve knowledge and examples
-    """
     async def retrieve_knowledge(self, query: str) -> str:
-        """
-        Invoke Gemini model_client with retrieval prompt template.
-        Cannot use the original logic to the authors, as that uses OpenAI: OpenAIChatCompletionClient.
-        """
+        """Retrieve knowledge using model client."""
         if self.dataset == "mimic_iii":
             from prompts_mimic import RetrKnowledge
         else:
@@ -124,52 +156,101 @@ class MedAgent:
             UserMessage(content=query_message, source="user"),
         ]
 
-        patience = 2
-        sleep_time = 3
+        await _rate_limiter.wait()
 
-        while patience > 0:
-            patience -= 1
-            try:
-                resp = await self.model_client.create(messages)
-                if isinstance(resp.content, str) and resp.content.strip():
-                    return resp.content.strip()
-            except Exception as e:
-                logger.warning(f"retrieve_knowledge error: {e}")
-                if sleep_time > 0:
-                    time.sleep(sleep_time)
+        async def _make_request():
+            resp = await self.model_client.create(messages)
+            if isinstance(resp.content, str) and resp.content.strip():
+                return resp.content.strip()
+            return "Fail to retrieve related knowledge, please try again later."
 
-        return "Fail to retrieve related knowledge, please try again later."
+        try:
+            result = await retry_with_backoff(_make_request, max_retries=5, base_delay=3.0)
+            return result
+        except Exception as e:
+            logger.error(f"retrieve_knowledge failed after retries: {e}")
+            return "Fail to retrieve related knowledge, please try again later."
 
 
     def retrieve_examples(self, query: str) -> str:
+        """Retrieve high-trust examples for few-shot learning."""
         if not self.memory or self.num_shots <= 0:
             return ""
 
-        levenshtein_dist = {}
-        for i in range(len(self.memory)):
-            question = self.memory[i]["question"]
-            levenshtein_dist[i] = Levenshtein.distance(query, question)
+        now = time.time()
+        scored: List[tuple[int, float, float]] = []
 
-        levenshtein_dist = sorted(levenshtein_dist.items(), key=lambda x: x[1])
-        selected_indexes = [
-            levenshtein_dist[i][0] for i in range(min(self.num_shots, len(levenshtein_dist)))
-        ]
+        for idx, m in enumerate(self.memory):
+            question = m.get("question", "")
+            dist = Levenshtein.distance(query, question)
+            effective_trust = self._compute_effective_trust(m, now=now)
 
-        examples = []
+            stored_question = m.get("question", "").lower()
+            has_poison_pattern = (
+                "refer" in stored_question and "to" in stored_question
+            ) or "do not use" in stored_question or "use patient" in stored_question and "instead" in stored_question
+            
+            if has_poison_pattern:
+                logger.warning(f"[RETRIEVE] BLOCKING memory {idx} - contains poison pattern (trust={effective_trust:.2f})")
+                continue
+
+            if effective_trust < 0.5:
+                logger.debug(f"[RETRIEVE] Skipping memory {idx} due to low trust ({effective_trust:.2f})")
+                continue
+
+            score = dist / (effective_trust + 1e-3)
+            scored.append((idx, score, effective_trust))
+
+        if not scored:
+            logger.warning("[RETRIEVE] No trusted examples found after filtering")
+            return ""
+
+        scored.sort(key=lambda x: x[1])
+        selected_indexes = [idx for idx, _, _ in scored[: self.num_shots]]
+
+        examples: List[str] = []
         for i in selected_indexes:
             m = self.memory[i]
             template = "Question: {}\nKnowledge:\n{}\nSolution:\n{}\n".format(
-                m["question"], m["knowledge"], m["code"]
+                m.get("question", ""),
+                m.get("knowledge", ""),
+                m.get("code", ""),
             )
             examples.append(template)
 
+        logger.debug(f"[RETRIEVE] Selected {len(examples)} examples from {len(scored)} trusted candidates")
         return "\n".join(examples)
+
+    def _compute_effective_trust(self, memory_item: Dict, now: float = None, half_life_hours: float = 24.0) -> float:
+        """Compute effective trust score with temporal decay."""
+        if now is None:
+            now = time.time()
+
+        base_trust = memory_item.get("trust_score", 0.8)
+        try:
+            base_trust = float(base_trust)
+        except (TypeError, ValueError):
+            base_trust = 0.8
+
+        base_trust = max(0.0, min(1.0, base_trust))
+
+        ts = memory_item.get("last_updated_at") or memory_item.get("created_at")
+        if ts is None:
+            return base_trust
+
+        age_hours = (now - ts) / 3600.0
+        
+        if half_life_hours <= 0:
+            return base_trust
+
+        decay_factor = 0.5 ** (age_hours / half_life_hours)
+        effective_trust = base_trust * decay_factor
+
+        return max(0.0, min(1.0, effective_trust))
 
 
     async def generate_init_message(self, message: str) -> str:
-        """
-        Create prompt with RAG and examples - prepended to question
-        """
+        """Create prompt with RAG and examples."""
         if self.dataset == "mimic_iii":
             from prompts_mimic import EHRAgent_Message_Prompt
         else:
@@ -179,13 +260,9 @@ class MedAgent:
 
         knowledge = await self.retrieve_knowledge(message)
         self.knowledge = knowledge
-        # print("-----------Retrieved Knowledge-----------")
-        # print(knowledge)
         print("Knowledge", len(knowledge))
 
         examples = self.retrieve_examples(message)
-        # print("-----------Retrieved Examples-----------")
-        # print(examples)
         print("Examples", len(examples))
 
         init_message = EHRAgent_Message_Prompt.format(
@@ -214,46 +291,40 @@ class MedAgent:
             UserMessage(content=query_message, source="user"),
         ]
 
-        patience = 2
-        sleep_time = 3
+        await _rate_limiter.wait()
 
-        while patience > 0:
-            patience -= 1
-            try:
-                resp = await self.model_client.create(messages)
-                if isinstance(resp.content, str) and resp.content.strip():
-                    return resp.content.strip()
-            except Exception as e:
-                logger.warning(f"error_debugger error: {e}")
-                if sleep_time > 0:
-                    time.sleep(sleep_time)
+        async def _make_request():
+            resp = await self.model_client.create(messages)
+            if isinstance(resp.content, str) and resp.content.strip():
+                return resp.content.strip()
+            return "Fail to diagnose the reasons to the errors."
 
-        return "Fail to diagnose the reasons to the errors."
+        try:
+            result = await retry_with_backoff(_make_request, max_retries=5, base_delay=3.0)
+            return result
+        except Exception as e:
+            logger.error(f"error_debugger failed after retries: {e}")
+            return "Fail to diagnose the reasons to the errors."
 
     async def answer(self, user_question: str) -> str:
-        """
-        Full flow:
-        1. Build init message with RAG with examples.
-        2. Invoke AssistantAgent to get response
-        3. Return the final message text.
-        """
+        """Build init message with RAG, invoke assistant, return response."""
         init_msg, examples = await self.generate_init_message(user_question)
         print("-----------Initial Message to AssistantAgent-----------")
         print(init_msg)
 
-        # Here we let the AssistantAgent do its thing (may call tools).
-        # result = await self.assistant.run(task=init_msg)
-        response = await self.assistant.on_messages(
-            [TextMessage(content=init_msg, source="user")],
-            cancellation_token=CancellationToken(),
-        )
+        await _rate_limiter.wait()
 
+        async def _call_assistant():
+            return await self.assistant.on_messages(
+                [TextMessage(content=init_msg, source="user")],
+                cancellation_token=CancellationToken(),
+            )
 
-        # `result` is an AgentChat Response. The final message is in `chat_message`.
+        response = await retry_with_backoff(_call_assistant, max_retries=5, base_delay=3.0)
+
         final_msg = response.chat_message
         answer = str(final_msg.content)
 
-        # Logging logic
         logs_string: list[str] = []
         logs_string.append(str(user_question))
         logs_string.append(init_msg)
@@ -263,16 +334,12 @@ class MedAgent:
             if isinstance(m, TextMessage):
                 if m.content is not None:
                     logs_string.append(str(m.content))
-
-            # Tool calls (function calls)
             elif isinstance(m, ToolCallRequestEvent):
-                # m.content is a list of FunctionCall
                 for fcall in m.content:
                     args_raw = fcall.arguments
                     try:
                         args = json.loads(args_raw)
                     except Exception:
-                        # if it isn't valid JSON, just log the raw string
                         logs_string.append(str(args_raw))
                         continue
 
@@ -280,10 +347,7 @@ class MedAgent:
                         logs_string.append(str(args["cell"]))
                     else:
                         logs_string.append(str(args))
-
-            # Tool execution results (outputs, errors, etc.)
             elif isinstance(m, ToolCallExecutionEvent):
-                # m.content is a list of FunctionExecutionResult
                 for result in m.content:
                     if result.content is not None:
                         logs_string.append(str(result.content))
