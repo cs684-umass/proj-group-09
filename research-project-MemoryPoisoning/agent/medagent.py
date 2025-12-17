@@ -40,6 +40,7 @@ class MedAgent:
         self.name = name
         self.model_client = model_client
         self.dataset = dataset
+        self.system_message = system_message or "You are a helpful medical coding assistant."
 
         # Few-shot memory stuff
         self.num_shots = 0
@@ -50,8 +51,8 @@ class MedAgent:
         self.code: str = ""
         self.knowledge: str = ""
 
-        # Build tools and the underlying AssistantAgent
-        self._build_agent(system_message or "You are a helpful medical coding assistant.")
+        # Build tools and the underlying AssistantAgent (or a simple path for HF models)
+        self._build_agent(self.system_message)
 
 
     def update_memory(self, num_shots: int, memory: List[Dict[str, str]]):
@@ -67,8 +68,15 @@ class MedAgent:
 
 
     def _build_agent(self, system_message: str):
-        # This is an example on how to attach a tool to the assistant
-        # Tool to execute code + run error debugger on failure.
+        # For HF Transformers-based clients (family == "hf-transformers"),
+        # we skip AssistantAgent entirely and use a direct LLM call path.
+        model_info = getattr(self.model_client, "model_info", {})
+        if model_info.get("family") == "hf-transformers":
+            self.assistant = None
+            return
+
+        # Otherwise, build tool list and AssistantAgent for OpenAI-style clients.
+
         async def execute_cell(cell: str) -> str:
             """
             Execute a Python cell (or any code) and, if there is an error,
@@ -88,19 +96,20 @@ class MedAgent:
             name="execute_cell",
         )
 
-        # This is the same as register_function, as the authors code.
         code_executor_tool = FunctionTool(
             run_code,
             name="python",
             description="Tool for function run_code",
         )
 
+        tools = [execute_tool, code_executor_tool]
+
         # Create AssistantAgent that will call tools and generate code.
         self.assistant = AssistantAgent(
             name=self.name,
             model_client=self.model_client,
             system_message=system_message,
-            tools=[execute_tool, code_executor_tool],
+            tools=tools,
             reflect_on_tool_use=True,
         )
 
@@ -241,51 +250,62 @@ class MedAgent:
         print("-----------Initial Message to AssistantAgent-----------")
         print(init_msg)
 
-        # Here we let the AssistantAgent do its thing (may call tools).
-        # result = await self.assistant.run(task=init_msg)
-        response = await self.assistant.on_messages(
-            [TextMessage(content=init_msg, source="user")],
-            cancellation_token=CancellationToken(),
-        )
-
-
-        # `result` is an AgentChat Response. The final message is in `chat_message`.
-        final_msg = response.chat_message
-        answer = str(final_msg.content)
-
-        # Logging logic
         logs_string: list[str] = []
         logs_string.append(str(user_question))
         logs_string.append(init_msg)
+
+        # If we have an AssistantAgent (OpenAI-style client), use it.
+        if self.assistant is not None:
+            response = await self.assistant.on_messages(
+                [TextMessage(content=init_msg, source="user")],
+                cancellation_token=CancellationToken(),
+            )
+
+            # `response` is an AgentChat Response. The final message is in `chat_message`.
+            final_msg = response.chat_message
+            answer = str(final_msg.content)
+            logs_string.append(answer)
+
+            for m in response.inner_messages:
+                if isinstance(m, TextMessage):
+                    if m.content is not None:
+                        logs_string.append(str(m.content))
+
+                # Tool calls (function calls)
+                elif isinstance(m, ToolCallRequestEvent):
+                    # m.content is a list of FunctionCall
+                    for fcall in m.content:
+                        args_raw = fcall.arguments
+                        try:
+                            args = json.loads(args_raw)
+                        except Exception:
+                            # if it isn't valid JSON, just log the raw string
+                            logs_string.append(str(args_raw))
+                            continue
+
+                        if isinstance(args, dict) and "cell" in args:
+                            logs_string.append(str(args["cell"]))
+                        else:
+                            logs_string.append(str(args))
+
+                # Tool execution results (outputs, errors, etc.)
+                elif isinstance(m, ToolCallExecutionEvent):
+                    # m.content is a list of FunctionExecutionResult
+                    for result in m.content:
+                        if result.content is not None:
+                            logs_string.append(str(result.content))
+
+            return answer, logs_string, examples
+
+        # Fallback path for simple model clients (e.g., HF Transformers without AssistantAgent)
+        # We call the underlying model_client directly with a basic System/User message pair.
+        messages = [
+            SystemMessage(content=self.system_message),
+            UserMessage(content=init_msg, source="user"),
+        ]
+
+        resp = await self.model_client.create(messages)
+        answer = resp.content if isinstance(resp.content, str) else str(resp)
         logs_string.append(answer)
 
-        for m in response.inner_messages:
-            if isinstance(m, TextMessage):
-                if m.content is not None:
-                    logs_string.append(str(m.content))
-
-            # Tool calls (function calls)
-            elif isinstance(m, ToolCallRequestEvent):
-                # m.content is a list of FunctionCall
-                for fcall in m.content:
-                    args_raw = fcall.arguments
-                    try:
-                        args = json.loads(args_raw)
-                    except Exception:
-                        # if it isn't valid JSON, just log the raw string
-                        logs_string.append(str(args_raw))
-                        continue
-
-                    if isinstance(args, dict) and "cell" in args:
-                        logs_string.append(str(args["cell"]))
-                    else:
-                        logs_string.append(str(args))
-
-            # Tool execution results (outputs, errors, etc.)
-            elif isinstance(m, ToolCallExecutionEvent):
-                # m.content is a list of FunctionExecutionResult
-                for result in m.content:
-                    if result.content is not None:
-                        logs_string.append(str(result.content))
-
-        return str(final_msg.content), logs_string, examples
+        return answer, logs_string, examples
